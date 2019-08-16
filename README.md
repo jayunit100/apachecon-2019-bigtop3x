@@ -25,13 +25,16 @@ Recently saw https://github.com/jayunit100/damons-data-lake/.
 
 ## Envisioning a Kubernetes native BigData stack
 
-- Kubernetes gives you infrastructure components for free.
-- Open *storage* stacks under the hood can be managed with Minio and OpenEBS.
-- Putting Presto on top of Minio gives ad hoc querying.
-- Knative on top of minio gives you a serverless model for event driven data cleaning.
-- Policies and security : Usage of Minio, Taints, for isolating traffic and data.
 
-## Infrastructure
+- *Kubernetes*  gives you infrastructure components for free.  In this case, we'll base the installer
+on Kind.
+- *OpenEBS* storage stacks under the hood can be managed with Minio and OpenEBS for k8s persistence.
+- *Minio* provides scale out s3 compatible storage layer for lake/warehouse functionality.
+- Putting *Presto* on top of Minio gives ad hoc querying.
+- *Knative* on top of minio gives you a serverless model for event driven data cleaning, paves way for
+serverless and continuous builds and delivery.
+- *Policies and security*: Usage of Minio security policies, K8s Taints, and Canal policies
+for isolating traffic and data.
 
 ### So what should we provide people with ? 
 
@@ -50,6 +53,4 @@ examples that are community curated and tested.
 
 - Spark against Minio datastores.
 - KNative for building spark apps that run in cluster.
-
-
 
