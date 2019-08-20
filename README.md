@@ -25,7 +25,6 @@ Recently saw https://github.com/jayunit100/damons-data-lake/.
 
 ## Envisioning a Kubernetes native BigData stack
 
-
 - *Kubernetes*  gives you infrastructure components for free.  In this case, we'll base the installer
 on Kind.
 - *OpenEBS* storage stacks under the hood can be managed with Minio and OpenEBS for k8s persistence.
@@ -36,7 +35,7 @@ serverless and continuous builds and delivery.
 - *Policies and security*: Usage of Minio security policies, K8s Taints, and Canal policies
 for isolating traffic and data.
 
-### So what should we provide people with ? 
+### So what should we provide people with ?
 
 Part 1) K8s as the cloud and implementation detail.
 
