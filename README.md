@@ -16,7 +16,7 @@ functionality of AWS, GCP, and so on.
 - serverless / event driven cleaning of data in object stores.
 - advanced scheduling of jobs for performance sensitive workloads (like spark).
 
-## Datalakes on cloud native infra using Minio/S3/Flink/Glue/Athena 
+## Datalakes on cloud native infra using Minio/S3/Flink/Glue/Athena
 
 Recently saw https://github.com/jayunit100/damons-data-lake/.
 - A problem set that is increasingly relevant: lots of sources, real time, unstructured warehouse/lake.
@@ -48,7 +48,7 @@ Part 2) Object storage and ad-hoc querying out of the box.
 - Presto -> Hive -> Minio for ad hoc querying.
 
 Part 3) Spark, KNative, and other programmatic tools for more advanced application
-examples that are community curated and tested. 
+examples that are community curated and tested.
 
 - Spark against Minio datastores.
 - KNative for building spark apps that run in cluster.
