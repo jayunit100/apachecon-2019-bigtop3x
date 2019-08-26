@@ -105,8 +105,8 @@ to inject minio access properties into spark itself, while also injecting other 
 NiFi.  
 4. For Presto, the configuration parameters for workers/masters are all injected also via config map.  We use
 a fork of https://github.com/dharmeshkakadia/presto-kubernetes for this change (PR's are submitted to make this upstream).
-5. For minio there arent any major changes needed out of the box, except using emptyDir for storage if you dont have
-a volume provisioner.
+5. For minio there arent any major changes needed out of the box, except using emptyDir for storage if you dont have a volume provisioner.
+6. For HBase, we also reuse the same zookeeper instance that is used via NIFI and kafka.  For now we use the nifi zk deployment but at some point we will make ZK a first class citizen.
 
 ============================================ 
 
