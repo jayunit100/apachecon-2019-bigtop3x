@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: minio
+  name: minio
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: minio
+    spec:
+      containers:
+      - args:
+        - server
+        - /data
+        env:
+        - name: MINIO_ACCESS_KEY
+          value: V42FCGRVMK24JJ8DHUYG
+        - name: MINIO_SECRET_KEY
+          value: bKhWxVF3kQoLY9kFmt91l+tDrEoZjqnWXzY9Eza
+        image: minio/minio
+        name: minio
+        ports:
+        - containerPort: 9000
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: minio-claim0
+        - mountPath: /root/.minio
+          name: minio-claim1
+      hostname: minio
+      restartPolicy: Always
+      volumes:
+      - name: minio-claim0
+        persistentVolumeClaim:
+          claimName: minio-claim0
+      - name: minio-claim1
+        persistentVolumeClaim:
+          claimName: minio-claim1
+status: {}
