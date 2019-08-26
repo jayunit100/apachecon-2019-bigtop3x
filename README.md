@@ -52,6 +52,36 @@ with batteries included, including storage.
                                                                    +---------------+
 ```
 
+If all services are deployed succesfully, you ultimately will have an inventory looking like this:
+
+
+```
+$> kubectl get pods -n bigdata
+NAME                                          READY   STATUS    RESTARTS   AGE
+coordinator-56956c8d84-hgxvc                  1/1     Running   0          34s
+fantastic-chipmunk-livy-5856779cf8-w8wlr      1/1     Running   0          3d1h
+fantastic-chipmunk-master-55f5945997-mbvbm    1/1     Running   0          3d
+fantastic-chipmunk-worker-5f7f468b8f-mwnmg    1/1     Running   1          3d1h
+fantastic-chipmunk-worker-5f7f468b8f-zkbrw    1/1     Running   0          3d1h
+fantastic-chipmunk-zeppelin-7958b9477-vv25d   1/1     Running   0          3d1h
+hbase-hbase-master-0                          1/1     Running   0          4h4m
+hbase-hbase-rs-0                              1/1     Running   2          4h7m
+hbase-hbase-rs-1                              1/1     Running   1          4h5m
+hbase-hbase-rs-2                              1/1     Running   0          4h4m
+hbase-hdfs-dn-0                               1/1     Running   1          4h7m
+hbase-hdfs-dn-1                               1/1     Running   0          4h5m
+hbase-hdfs-dn-2                               1/1     Running   0          4h5m
+hbase-hdfs-nn-0                               1/1     Running   0          4h7m
+minio-7bf4678799-cd8qz                        1/1     Running   0          3d22h
+my-kafka-0                                    1/1     Running   0          27h
+my-kafka-1                                    1/1     Running   0          27h
+my-kafka-2                                    1/1     Running   0          27h
+nifi-0                                        4/4     Running   0          2d3h
+nifi-zookeeper-0                              1/1     Running   0          2d3h
+nifi-zookeeper-1                              1/1     Running   0          2d3h
+nifi-zookeeper-2                              1/1     Running   0          2d3h
+worker-565c7c858-pjlpg                        1/1     Running   0          34s
+```
 
 ## Instructions!
 
