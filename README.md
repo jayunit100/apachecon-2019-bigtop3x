@@ -83,11 +83,12 @@ nifi-zookeeper-2                              1/1     Running   0          2d3h
 worker-565c7c858-pjlpg                        1/1     Running   0          34s
 ```
 
-## How this is different from randomly running these projects directly from github or helm repos.
+# Modifications from generic charts or recipes
 
-In general, these projects don't work quite the way you need/want them to in a production  env. from 
-the standard repos.  Thats becuase interop across tools or reuse of core components isn't really done for you. The biggest whole, in my findings, was the fact that configuration isnt really externalized very well in most off the shelf helm charts.  The other obvious missing link is that storage isnt provided for you, which is
-a problem for folks that don't know how to do things in K8s.  
+configuration isnt really externalized very well in most off the shelf helm charts.  The other obvious missing link is that storage isnt provided for you, which is a problem for folks that don't know how to do things in K8s.   We've externalized configuration for all files (i.e. see spark as a canonical example of this) into configmaps and unified zookeeper instances into a single instances for ease of deployment here.  Also, this repo has *tested* different helm repos / yaml files to see what random code on the internet actually works
+the way it should.  
+
+For example, the stable helm charts don't properly configure zepplin, allow for empty storage on ZK, or inject config into kafka as you'd want to be able to in certain scenarios.  In this repo, everything should *just work* provided you create things in *the right order*.
 
 # Instructions.
 
