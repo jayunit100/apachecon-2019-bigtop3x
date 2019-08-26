@@ -93,7 +93,7 @@ Notes and Ideas
 
 ## Datalakes on cloud native infra using Minio/S3/Flink/Glue/Athena
 
-Recently saw https://github.com/jayunit100/damons-data-lake/.
+Recently saw https://github.com/dacort/damons-data-lake.
 - A problem set that is increasingly relevant: lots of sources, real time, unstructured warehouse/lake.
 - No upstream plug-and-play alternative to cloud native services stack.
 - Infrastructure, storage, networking is the hardest part.
