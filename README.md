@@ -83,7 +83,13 @@ nifi-zookeeper-2                              1/1     Running   0          2d3h
 worker-565c7c858-pjlpg                        1/1     Running   0          34s
 ```
 
-## Instructions!
+## How this is different from randomly running these projects directly from github or helm repos.
+
+In general, these projects don't work quite the way you need/want them to in a production  env. from 
+the standard repos.  Thats becuase interop across tools or reuse of core components isn't really done for you. The biggest whole, in my findings, was the fact that configuration isnt really externalized very well in most off the shelf helm charts.  The other obvious missing link is that storage isnt provided for you, which is
+a problem for folks that don't know how to do things in K8s.  
+
+# Instructions.
 
 1. First , install an NFS volume provisioner from the instructions storage/ directory
 2. Then follow the other instructions in the storage README
