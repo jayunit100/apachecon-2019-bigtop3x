@@ -24,9 +24,9 @@ spec:
         - /data
         env:
         - name: MINIO_ACCESS_KEY
-          value: V42FCGRVMK24JJ8DHUYG
+          value: apachecon
         - name: MINIO_SECRET_KEY
-          value: bKhWxVF3kQoLY9kFmt91l+tDrEoZjqnWXzY9Eza
+          value: apachecon
         image: minio/minio
         name: minio
         ports:
