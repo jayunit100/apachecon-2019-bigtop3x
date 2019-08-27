@@ -19,26 +19,16 @@ spec:
         io.kompose.service: hadoop
     spec:
       containers:
-      - image: prestodb/cdh5.13-hive:latest
+      - image: docker.io/jayunit100/presto-hadoop-hive
         name: hadoop-master
         resources: {}
         volumeMounts:
-        - mountPath: /etc/hadoop/conf/core-site.xml
-          name: hadoop-claim0
-        - mountPath: /usr/lib/hive/lib/json-udf-1.3.8-jar-with-dependencies.jar
-          name: hadoop-claim1
-        - mountPath: /usr/lib/hive/lib/json-serde-1.3.8-jar-with-dependencies.jar
-          name: hadoop-claim2
+        - mountPath: /etc/hadoop/conf/
+          name: hadoop-cm
       hostname: hadoop-master
       restartPolicy: Always
       volumes:
-      - name: hadoop-claim0
-        persistentVolumeClaim:
-          claimName: hadoop-claim0
-      - name: hadoop-claim1
-        persistentVolumeClaim:
-          claimName: hadoop-claim1
-      - name: hadoop-claim2
-        persistentVolumeClaim:
-          claimName: hadoop-claim2
+      - name: hadoop-cm
+        configMap:
+          name: hadoop-cm
 status: {}
