@@ -44,4 +44,3 @@ data:
 kind: ConfigMap
 metadata:
   name: hadoop-cm
-  namespace: default
