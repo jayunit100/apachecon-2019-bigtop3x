@@ -1,8 +1,15 @@
-# Use squash !
+build the images in the individual directories, then tag and push them... i.e.
 
-Building this image, make sure you use squash so you can gut the 12 GB file :) 
+```
+pushd worker
+docker build -t -i  jayunit100/wlan0-presto-worker:latest
+docker push  jayunit100/wlan0-presto-worker:latest
+popd
 
+pushd controller
 
-docker build --squash -t jayunit100/wlan0-presto:latest ./
+docker build -t -i  jayunit100/wlan0-presto-controller:latest
+docker push  jayunit100/wlan0-presto-controller:latest
+popd
 
-
+```
