@@ -1,3 +1,6 @@
+# Recommended to use presto-minio-kubernetes instead ! its alot simpler to do them all at once.
+
+
 # This is heavily borrowed from https://github.com/dharmeshkakadia/presto-kubernetes
 
 Reference it as an upsream , as well as its docs.
