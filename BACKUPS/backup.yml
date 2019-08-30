@@ -1,0 +1,5390 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.213/32
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    generateName: coordinator-56956c8d84-
+    labels:
+      pod-template-hash: 56956c8d84
+      presto: coordinator
+    name: coordinator-56956c8d84-hgxvc
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coordinator-56956c8d84
+      uid: 3e726fd4-837f-433e-80f4-0feedfee7055
+    resourceVersion: "1170088"
+    selfLink: /api/v1/namespaces/bigdata/pods/coordinator-56956c8d84-hgxvc
+    uid: 9f3ef86b-55bd-4b0f-b2f0-b97fc2a7b080
+  spec:
+    containers:
+    - envFrom:
+      - configMapRef:
+          name: prestocfg
+      image: johandry/presto
+      imagePullPolicy: Always
+      livenessProbe:
+        exec:
+          command:
+          - /etc/init.d/presto status | grep -q 'Running as'
+        failureThreshold: 3
+        periodSeconds: 300
+        successThreshold: 1
+        timeoutSeconds: 10
+      name: presto-coordinator
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T17:03:03Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:37Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:37Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T17:03:03Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://34ec0b8407ce69adaa4d46ac5108a932081e4575eb33a33e8c2bf4d05ed44869
+      image: johandry/presto:latest
+      imageID: docker-pullable://johandry/presto@sha256:ed5a47cd302a92098397a62294d2e9099534856a865bd46369569b56ffb7c74b
+      lastState:
+        terminated:
+          containerID: docker://902bb852cef24b09a32dd731e22f4db3711211ed49c5a17740b49592d4c5b3b1
+          exitCode: 137
+          finishedAt: "2019-08-30T14:17:23Z"
+          reason: Error
+          startedAt: "2019-08-30T14:02:25Z"
+      name: presto-coordinator
+      ready: true
+      restartCount: 363
+      state:
+        running:
+          startedAt: "2019-08-30T14:17:25Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.213
+    qosClass: BestEffort
+    startTime: "2019-08-26T17:03:03Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.195/32
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generateName: fantastic-chipmunk-livy-5856779cf8-
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-livy
+      heritage: Tiller
+      pod-template-hash: 5856779cf8
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-livy-5856779cf8-w8wlr
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: fantastic-chipmunk-livy-5856779cf8
+      uid: 90fecb3b-2ec8-416a-b5cc-ab6dea8e1e17
+    resourceVersion: "1013837"
+    selfLink: /api/v1/namespaces/bigdata/pods/fantastic-chipmunk-livy-5856779cf8-w8wlr
+    uid: c8076f51-4c93-4ad3-93d3-07c7243edd92
+  spec:
+    containers:
+    - env:
+      - name: SPARK_MASTER
+        value: spark://fantastic-chipmunk-master:7077
+      - name: SPARK_HOME
+        value: /opt/spark
+      - name: HADOOP_HOME
+        value: /opt/hadoop
+      - name: SPARK_CONF_DIR
+        value: /opt/spark/conf
+      - name: HOST
+        value: 0.0.0.0
+      image: mcr.microsoft.com/mmlspark/livy:v4_mini
+      imagePullPolicy: IfNotPresent
+      name: fantastic-chipmunk-livy
+      ports:
+      - containerPort: 8998
+        name: http
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T15:21:00Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:37Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:37Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T15:21:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://d019c7c184bf02c3960dbbd07e93d53d65fb275358cc08e79dfa4cd0e828cfe5
+      image: mcr.microsoft.com/mmlspark/livy:v4_mini
+      imageID: docker-pullable://mcr.microsoft.com/mmlspark/livy@sha256:50c0935985395825bad72740cbf0d5f137c0c654ca93204a4514b888ccbc16bd
+      lastState:
+        terminated:
+          containerID: docker://08e6b42949b0b4c54d104eadd4196decadcfc73139b37ca640259c951318c025
+          exitCode: 143
+          finishedAt: "2019-08-29T15:32:58Z"
+          reason: Error
+          startedAt: "2019-08-29T14:56:45Z"
+      name: fantastic-chipmunk-livy
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:36Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.195
+    qosClass: Burstable
+    startTime: "2019-08-23T15:21:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.247/32
+    creationTimestamp: "2019-08-23T16:30:09Z"
+    generateName: fantastic-chipmunk-master-55f5945997-
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      pod-template-hash: 55f5945997
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master-55f5945997-mbvbm
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: fantastic-chipmunk-master-55f5945997
+      uid: 0b785f51-4864-4e4c-9d9b-fedfc77a20e6
+    resourceVersion: "1013918"
+    selfLink: /api/v1/namespaces/bigdata/pods/fantastic-chipmunk-master-55f5945997-mbvbm
+    uid: 49145e81-3238-4218-aaae-0ff72c484a03
+  spec:
+    containers:
+    - args:
+      - echo $(hostname -i) fantastic-chipmunk-master >> /etc/hosts; /opt/spark/bin/spark-class
+        org.apache.spark.deploy.master.Master
+      command:
+      - /bin/sh
+      - -c
+      env:
+      - name: SPARK_DAEMON_MEMORY
+        value: 1g
+      - name: SPARK_MASTER_HOST
+        value: fantastic-chipmunk-master
+      - name: SPARK_MASTER_PORT
+        value: "7077"
+      - name: SPARK_MASTER_WEBUI_PORT
+        value: "8080"
+      image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+      imagePullPolicy: IfNotPresent
+      name: fantastic-chipmunk-master
+      ports:
+      - containerPort: 7077
+        protocol: TCP
+      - containerPort: 8080
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/spark/conf/
+        name: spark-conf-vol
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: spark-conf
+      name: spark-conf-vol
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T16:30:09Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T16:30:09Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://e4a14c6a37254222b10687f35e74c167daef0e5a125e965d122b51c59067fdae
+      image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+      imageID: docker-pullable://mcr.microsoft.com/mmlspark/spark2.4@sha256:a7da0d7cd86ab374d1f0dc7ae4cd35260f8798f8e40a4e4e818748f61a389279
+      lastState:
+        terminated:
+          containerID: docker://af00a59f649817aef9714afb9d815719848c7eb1ba572b92120a870f14a69540
+          exitCode: 137
+          finishedAt: "2019-08-29T15:33:08Z"
+          reason: Error
+          startedAt: "2019-08-29T14:56:43Z"
+      name: fantastic-chipmunk-master
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:22Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.247
+    qosClass: Burstable
+    startTime: "2019-08-23T16:30:09Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.219/32
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generateName: fantastic-chipmunk-worker-5f7f468b8f-
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-worker
+      heritage: Tiller
+      pod-template-hash: 5f7f468b8f
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-worker-5f7f468b8f-zkbrw
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: fantastic-chipmunk-worker-5f7f468b8f
+      uid: a5878905-d313-4d24-a994-2593703b52cf
+    resourceVersion: "1013900"
+    selfLink: /api/v1/namespaces/bigdata/pods/fantastic-chipmunk-worker-5f7f468b8f-zkbrw
+    uid: 22315c90-92cf-4a97-9400-212730f0b08e
+  spec:
+    containers:
+    - command:
+      - /opt/spark/bin/spark-class
+      - org.apache.spark.deploy.worker.Worker
+      - spark://fantastic-chipmunk-master:7077
+      env:
+      - name: SPARK_DAEMON_MEMORY
+        value: 1g
+      - name: SPARK_WORKER_MEMORY
+        value: 1g
+      - name: SPARK_WORKER_WEBUI_PORT
+        value: "8080"
+      image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+      imagePullPolicy: IfNotPresent
+      name: fantastic-chipmunk-worker
+      ports:
+      - containerPort: 8081
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 2Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T15:22:55Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:37Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:37Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T15:22:55Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://985a25befba71d238534c36826ead628599b19ba41de0c2b87d8db30a6684c69
+      image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+      imageID: docker-pullable://mcr.microsoft.com/mmlspark/spark2.4@sha256:a7da0d7cd86ab374d1f0dc7ae4cd35260f8798f8e40a4e4e818748f61a389279
+      lastState:
+        terminated:
+          containerID: docker://a81f4ecd0bc23401e5874cc4794330a2f207c0cbcb7f896e38e6dccdd9d12404
+          exitCode: 143
+          finishedAt: "2019-08-29T15:32:58Z"
+          reason: Error
+          startedAt: "2019-08-29T14:56:44Z"
+      name: fantastic-chipmunk-worker
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:36Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.219
+    qosClass: Burstable
+    startTime: "2019-08-23T15:22:55Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.254/32
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generateName: fantastic-chipmunk-zeppelin-7958b9477-
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-zeppelin
+      heritage: Tiller
+      pod-template-hash: 7958b9477
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-zeppelin-7958b9477-vv25d
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: fantastic-chipmunk-zeppelin-7958b9477
+      uid: 6086d505-0520-4477-a9ad-7ce71012cedd
+    resourceVersion: "1013872"
+    selfLink: /api/v1/namespaces/bigdata/pods/fantastic-chipmunk-zeppelin-7958b9477-vv25d
+    uid: 479b863e-eb91-4abc-baef-2067011f0feb
+  spec:
+    containers:
+    - env:
+      - name: SPARK_MASTER
+        value: spark://fantastic-chipmunk-master:7077
+      image: mcr.microsoft.com/mmlspark/zeppelin:v4_mini
+      imagePullPolicy: IfNotPresent
+      name: fantastic-chipmunk-zeppelin
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 100m
+          memory: 2Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T15:22:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:34Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:34Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-23T15:22:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://0bf4c96ce3f83265d73e31c1082ff4e23e80b19962ac55911cb09194255ba09c
+      image: mcr.microsoft.com/mmlspark/zeppelin:v4_mini
+      imageID: docker-pullable://mcr.microsoft.com/mmlspark/zeppelin@sha256:34497906bff3c9c472cb33d35a6aa0328a508ffac9cbf797d2a39928266e8f86
+      lastState:
+        terminated:
+          containerID: docker://b4574a1ed8dc591c41f9bf18af525b8d6387a82522d0a5b65b5048dd5ff20f63
+          exitCode: 143
+          finishedAt: "2019-08-29T15:33:04Z"
+          reason: Error
+          startedAt: "2019-08-29T14:56:47Z"
+      name: fantastic-chipmunk-zeppelin
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:33Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.254
+    qosClass: Burstable
+    startTime: "2019-08-23T15:22:53Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.196/32
+    creationTimestamp: "2019-08-26T12:59:04Z"
+    generateName: hbase-hbase-master-
+    labels:
+      app: hbase
+      component: hbase-master
+      controller-revision-hash: hbase-hbase-master-777764448f
+      release: hbase
+      statefulset.kubernetes.io/pod-name: hbase-hbase-master-0
+    name: hbase-hbase-master-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: hbase-hbase-master
+      uid: 1da528ed-7f5f-4a46-8fbe-f6a95bde98cb
+    resourceVersion: "1171151"
+    selfLink: /api/v1/namespaces/bigdata/pods/hbase-hbase-master-0
+    uid: 875594aa-f556-4ee6-9e34-396ff3aa90cf
+  spec:
+    containers:
+    - command:
+      - /bin/bash
+      - /tmp/hbase-config/bootstrap.sh
+      image: pierrezemb/hbase-docker:distributed-1.3.1-hadoop-2.7.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 16010
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: hbase-master
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 16010
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/hbase-config
+        name: hbase-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: hbase-hbase-master-0
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: hbase-hbase-master
+    terminationGracePeriodSeconds: 0
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: hbase-configmap
+      name: hbase-config
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:59:04Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:26:34Z"
+      message: 'containers with unready status: [hbase-master]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:26:34Z"
+      message: 'containers with unready status: [hbase-master]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:59:04Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://7df5035f28fd1c9d5e362ed8bfd4b3675f95b18dd1ae1ad7e67676085d968197
+      image: pierrezemb/hbase-docker:distributed-1.3.1-hadoop-2.7.3
+      imageID: docker-pullable://pierrezemb/hbase-docker@sha256:0d3f8b2e1c7ab49c6a2cd6a1564b5ac7e5f995ecedc7f8c84c7c48d111dd6061
+      lastState:
+        terminated:
+          containerID: docker://7df5035f28fd1c9d5e362ed8bfd4b3675f95b18dd1ae1ad7e67676085d968197
+          exitCode: 137
+          finishedAt: "2019-08-30T14:26:35Z"
+          reason: Error
+          startedAt: "2019-08-30T14:25:25Z"
+      name: hbase-master
+      ready: false
+      restartCount: 1063
+      state:
+        waiting:
+          message: Back-off 5m0s restarting failed container=hbase-master pod=hbase-hbase-master-0_bigdata(875594aa-f556-4ee6-9e34-396ff3aa90cf)
+          reason: CrashLoopBackOff
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.196
+    qosClass: Burstable
+    startTime: "2019-08-26T12:59:04Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.255/32
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generateName: hbase-hbase-rs-
+    labels:
+      app: hbase
+      component: hbase-rs
+      controller-revision-hash: hbase-hbase-rs-6c4b94fb99
+      release: hbase
+      statefulset.kubernetes.io/pod-name: hbase-hbase-rs-0
+    name: hbase-hbase-rs-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: hbase-hbase-rs
+      uid: c29efb1c-d22b-4631-8d81-8b32c5770a8f
+    resourceVersion: "1014243"
+    selfLink: /api/v1/namespaces/bigdata/pods/hbase-hbase-rs-0
+    uid: 672a105c-6386-414c-ae98-c039449d341f
+  spec:
+    containers:
+    - command:
+      - /bin/bash
+      - /tmp/hbase-config/bootstrap.sh
+      image: pierrezemb/hbase-docker:distributed-1.3.1-hadoop-2.7.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 16030
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: hbase-rs
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 16030
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/hbase-config
+        name: hbase-config
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: hbase-hbase-rs-0
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: hbase-hbase-rs
+    terminationGracePeriodSeconds: 0
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: hbase-configmap
+      name: hbase-config
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:56:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:34:34Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:34:34Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:56:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://d632ea445996c23082b8e4f059abfaf727c37ae49f098297cff35c44726d9832
+      image: pierrezemb/hbase-docker:distributed-1.3.1-hadoop-2.7.3
+      imageID: docker-pullable://pierrezemb/hbase-docker@sha256:0d3f8b2e1c7ab49c6a2cd6a1564b5ac7e5f995ecedc7f8c84c7c48d111dd6061
+      lastState:
+        terminated:
+          containerID: docker://3113d9a814a0172820cea79382a5a74099e8f46160fb1980ad43102dc74932d9
+          exitCode: 137
+          finishedAt: "2019-08-29T15:34:06Z"
+          reason: Error
+          startedAt: "2019-08-29T15:33:31Z"
+      name: hbase-rs
+      ready: true
+      restartCount: 16
+      state:
+        running:
+          startedAt: "2019-08-29T15:34:06Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.255
+    qosClass: Burstable
+    startTime: "2019-08-26T12:56:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.241/32
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generateName: hbase-hdfs-dn-
+    labels:
+      app: hbase
+      component: hdfs-dn
+      controller-revision-hash: hbase-hdfs-dn-7558879b8d
+      release: hbase
+      statefulset.kubernetes.io/pod-name: hbase-hdfs-dn-0
+    name: hbase-hdfs-dn-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: hbase-hdfs-dn
+      uid: a800304a-c2bf-4287-9148-df86b18e8e7b
+    resourceVersion: "1171518"
+    selfLink: /api/v1/namespaces/bigdata/pods/hbase-hdfs-dn-0
+    uid: 940a74b3-f24f-42d1-bbf1-b3f76a3e456c
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app: hbase
+                component: hdfs-dn
+                release: hbase
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - command:
+      - /bin/bash
+      - /tmp/hadoop-config/bootstrap.sh
+      - -d
+      image: danisla/hadoop:2.7.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50075
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: hdfs-dn
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50075
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/hadoop-config
+        name: hadoop-config
+      - mountPath: /root/hdfs/datanode
+        name: dfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: hbase-hdfs-dn-0
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: hbase-hdfs-dn
+    terminationGracePeriodSeconds: 0
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: hadoop-configmap
+      name: hadoop-config
+    - emptyDir: {}
+      name: dfs
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:56:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:22:30Z"
+      message: 'containers with unready status: [hdfs-dn]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:22:30Z"
+      message: 'containers with unready status: [hdfs-dn]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:56:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://04796e7c40c0e99c2096caf7887745df76180dc7b148a0a0a5c73c68971eba98
+      image: danisla/hadoop:2.7.3
+      imageID: docker-pullable://danisla/hadoop@sha256:c841f555e67480b82db41cc9363ad3ccf307a0418a909e5e6fed6417d9660432
+      lastState:
+        terminated:
+          containerID: docker://04796e7c40c0e99c2096caf7887745df76180dc7b148a0a0a5c73c68971eba98
+          exitCode: 137
+          finishedAt: "2019-08-30T14:28:54Z"
+          reason: Error
+          startedAt: "2019-08-30T14:28:15Z"
+      name: hdfs-dn
+      ready: false
+      restartCount: 1211
+      state:
+        waiting:
+          message: Back-off 5m0s restarting failed container=hdfs-dn pod=hbase-hdfs-dn-0_bigdata(940a74b3-f24f-42d1-bbf1-b3f76a3e456c)
+          reason: CrashLoopBackOff
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.241
+    qosClass: Burstable
+    startTime: "2019-08-26T12:56:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.251/32
+    creationTimestamp: "2019-08-26T12:58:01Z"
+    generateName: hbase-hdfs-dn-
+    labels:
+      app: hbase
+      component: hdfs-dn
+      controller-revision-hash: hbase-hdfs-dn-7558879b8d
+      release: hbase
+      statefulset.kubernetes.io/pod-name: hbase-hdfs-dn-1
+    name: hbase-hdfs-dn-1
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: hbase-hdfs-dn
+      uid: a800304a-c2bf-4287-9148-df86b18e8e7b
+    resourceVersion: "1171125"
+    selfLink: /api/v1/namespaces/bigdata/pods/hbase-hdfs-dn-1
+    uid: 75a84803-0bf6-45a1-8b18-16b6ceaee5b6
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app: hbase
+                component: hdfs-dn
+                release: hbase
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - command:
+      - /bin/bash
+      - /tmp/hadoop-config/bootstrap.sh
+      - -d
+      image: danisla/hadoop:2.7.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50075
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: hdfs-dn
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50075
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/hadoop-config
+        name: hadoop-config
+      - mountPath: /root/hdfs/datanode
+        name: dfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: hbase-hdfs-dn-1
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: hbase-hdfs-dn
+    terminationGracePeriodSeconds: 0
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: hadoop-configmap
+      name: hadoop-config
+    - emptyDir: {}
+      name: dfs
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:58:01Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:26:18Z"
+      message: 'containers with unready status: [hdfs-dn]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:26:18Z"
+      message: 'containers with unready status: [hdfs-dn]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:58:01Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://054263ba6046d7a41f936bebec1ed336a961e319c0ce1a22aacb5770d997af4f
+      image: danisla/hadoop:2.7.3
+      imageID: docker-pullable://danisla/hadoop@sha256:c841f555e67480b82db41cc9363ad3ccf307a0418a909e5e6fed6417d9660432
+      lastState:
+        terminated:
+          containerID: docker://054263ba6046d7a41f936bebec1ed336a961e319c0ce1a22aacb5770d997af4f
+          exitCode: 137
+          finishedAt: "2019-08-30T14:26:23Z"
+          reason: Error
+          startedAt: "2019-08-30T14:25:43Z"
+      name: hdfs-dn
+      ready: false
+      restartCount: 1201
+      state:
+        waiting:
+          message: Back-off 5m0s restarting failed container=hdfs-dn pod=hbase-hdfs-dn-1_bigdata(75a84803-0bf6-45a1-8b18-16b6ceaee5b6)
+          reason: CrashLoopBackOff
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.251
+    qosClass: Burstable
+    startTime: "2019-08-26T12:58:01Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.193/32
+    creationTimestamp: "2019-08-26T12:58:08Z"
+    generateName: hbase-hdfs-dn-
+    labels:
+      app: hbase
+      component: hdfs-dn
+      controller-revision-hash: hbase-hdfs-dn-7558879b8d
+      release: hbase
+      statefulset.kubernetes.io/pod-name: hbase-hdfs-dn-2
+    name: hbase-hdfs-dn-2
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: hbase-hdfs-dn
+      uid: a800304a-c2bf-4287-9148-df86b18e8e7b
+    resourceVersion: "1171073"
+    selfLink: /api/v1/namespaces/bigdata/pods/hbase-hdfs-dn-2
+    uid: 05a3d3cf-fac7-4349-bfd5-601e9efe6aa2
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app: hbase
+                component: hdfs-dn
+                release: hbase
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - command:
+      - /bin/bash
+      - /tmp/hadoop-config/bootstrap.sh
+      - -d
+      image: danisla/hadoop:2.7.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50075
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: hdfs-dn
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50075
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/hadoop-config
+        name: hadoop-config
+      - mountPath: /root/hdfs/datanode
+        name: dfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: hbase-hdfs-dn-2
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: hbase-hdfs-dn
+    terminationGracePeriodSeconds: 0
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: hadoop-configmap
+      name: hadoop-config
+    - emptyDir: {}
+      name: dfs
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:58:08Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:25:19Z"
+      message: 'containers with unready status: [hdfs-dn]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:25:19Z"
+      message: 'containers with unready status: [hdfs-dn]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:58:08Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://c2ec0af4289814014127c1aa1ab9cf37ba787f1cc750724808c7bcf66f3b8166
+      image: danisla/hadoop:2.7.3
+      imageID: docker-pullable://danisla/hadoop@sha256:c841f555e67480b82db41cc9363ad3ccf307a0418a909e5e6fed6417d9660432
+      lastState:
+        terminated:
+          containerID: docker://c2ec0af4289814014127c1aa1ab9cf37ba787f1cc750724808c7bcf66f3b8166
+          exitCode: 137
+          finishedAt: "2019-08-30T14:25:57Z"
+          reason: Error
+          startedAt: "2019-08-30T14:25:18Z"
+      name: hdfs-dn
+      ready: false
+      restartCount: 1178
+      state:
+        waiting:
+          message: Back-off 5m0s restarting failed container=hdfs-dn pod=hbase-hdfs-dn-2_bigdata(05a3d3cf-fac7-4349-bfd5-601e9efe6aa2)
+          reason: CrashLoopBackOff
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.193
+    qosClass: Burstable
+    startTime: "2019-08-26T12:58:08Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.205/32
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generateName: hbase-hdfs-nn-
+    labels:
+      app: hbase
+      component: hdfs-nn
+      controller-revision-hash: hbase-hdfs-nn-6d7b5788d5
+      release: hbase
+      statefulset.kubernetes.io/pod-name: hbase-hdfs-nn-0
+    name: hbase-hdfs-nn-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: hbase-hdfs-nn
+      uid: b84feb7b-159f-418f-9f6f-13c165af4cc8
+    resourceVersion: "1014025"
+    selfLink: /api/v1/namespaces/bigdata/pods/hbase-hdfs-nn-0
+    uid: 9797af7c-4e98-4dd5-a2a0-6f42f97a8595
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app: hbase
+                component: hdfs-nn
+                release: hbase
+            topologyKey: kubernetes.io/hostname
+          weight: 5
+    containers:
+    - command:
+      - /bin/bash
+      - /tmp/hadoop-config/bootstrap.sh
+      - -d
+      image: danisla/hadoop:2.7.3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50070
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      name: hdfs-nn
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /
+          port: 50070
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp/hadoop-config
+        name: hadoop-config
+      - mountPath: /root/hdfs/namenode
+        name: dfs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: hbase-hdfs-nn-0
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: hbase-hdfs-nn
+    terminationGracePeriodSeconds: 0
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: hadoop-configmap
+      name: hadoop-config
+    - emptyDir: {}
+      name: dfs
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:56:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:57Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:57Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T12:56:32Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://c77946fba95488180f742f16cf4649121155fa741ac39c1a27dc589640722bb0
+      image: danisla/hadoop:2.7.3
+      imageID: docker-pullable://danisla/hadoop@sha256:c841f555e67480b82db41cc9363ad3ccf307a0418a909e5e6fed6417d9660432
+      lastState:
+        terminated:
+          containerID: docker://f636b653472f6099f07be2638a84664c4cda5320d70806af78267effd93ec375
+          exitCode: 137
+          finishedAt: "2019-08-29T15:33:08Z"
+          reason: Error
+          startedAt: "2019-08-29T14:56:37Z"
+      name: hdfs-nn
+      ready: true
+      restartCount: 7
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:23Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.205
+    qosClass: Burstable
+    startTime: "2019-08-26T12:56:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.240/32
+    creationTimestamp: "2019-08-25T13:43:53Z"
+    generateName: my-kafka-
+    labels:
+      app: kafka
+      controller-revision-hash: my-kafka-86d8df5cb8
+      release: my-kafka
+      statefulset.kubernetes.io/pod-name: my-kafka-0
+    name: my-kafka-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: my-kafka
+      uid: 40ed0540-8145-4abb-9010-20cdfad8f5fd
+    resourceVersion: "1014312"
+    selfLink: /api/v1/namespaces/bigdata/pods/my-kafka-0
+    uid: e87d6633-be21-4e01-bcff-3d2dd70f9f8b
+  spec:
+    containers:
+    - command:
+      - sh
+      - -exc
+      - |
+        unset KAFKA_PORT && \
+        export KAFKA_BROKER_ID=${POD_NAME##*-} && \
+        export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${POD_IP}:9092 && \
+        exec /etc/confluent/docker/run
+      env:
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.podIP
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: KAFKA_HEAP_OPTS
+        value: -Xmx1G -Xms1G
+      - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+        value: "3"
+      - name: KAFKA_LOG_DIRS
+        value: /opt/kafka/data/logs
+      - name: KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE
+        value: "false"
+      - name: KAFKA_JMX_PORT
+        value: "5555"
+      envFrom:
+      - configMapRef:
+          name: kafka-cm
+      image: confluentinc/cp-kafka:5.0.1
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - sh
+          - -ec
+          - /usr/bin/jps | /bin/grep -q SupportedKafka
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: kafka-broker
+      ports:
+      - containerPort: 9092
+        name: kafka
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        tcpSocket:
+          port: kafka
+        timeoutSeconds: 5
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/kafka/data
+        name: datadir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: my-kafka-0
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: my-kafka-headless
+    terminationGracePeriodSeconds: 60
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: datadir
+      persistentVolumeClaim:
+        claimName: datadir-my-kafka-0
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-25T13:43:53Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:34:58Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:34:58Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-25T13:43:53Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://c2014c8653ca7b46adac5d1021171e79dc8c35dae607c0ca3704d04e4b2a6d8b
+      image: confluentinc/cp-kafka:5.0.1
+      imageID: docker-pullable://confluentinc/cp-kafka@sha256:c87b1c07fb53b1a82d24b436e53485917876a963dc67311800109fa12fe9a63d
+      lastState:
+        terminated:
+          containerID: docker://aba56bf64ff7304cb15846efb728180ed2602199bcee4eb356fc78bb1d8fc929
+          exitCode: 1
+          finishedAt: "2019-08-29T15:34:11Z"
+          reason: Error
+          startedAt: "2019-08-29T15:33:23Z"
+      name: kafka-broker
+      ready: true
+      restartCount: 5
+      state:
+        running:
+          startedAt: "2019-08-29T15:34:28Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.240
+    qosClass: BestEffort
+    startTime: "2019-08-25T13:43:53Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.206/32
+      security.alpha.kubernetes.io/sysctls: net.ipv4.ip_local_port_range=10000 65000
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    generateName: nifi-
+    labels:
+      app: nifi
+      chart: nifi-0.1.5
+      controller-revision-hash: nifi-55cb855bd9
+      heritage: Tiller
+      release: nifi
+      statefulset.kubernetes.io/pod-name: nifi-0
+    name: nifi-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: nifi
+      uid: 400b6d61-4589-472e-8dc5-ce9721bac1e6
+    resourceVersion: "1169831"
+    selfLink: /api/v1/namespaces/bigdata/pods/nifi-0
+    uid: 39f9dbe2-0dab-4ec9-b0b9-90fe05cdee77
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: component
+                operator: In
+                values:
+                - nifi
+            topologyKey: kubernetes.io/hostname
+          weight: 1
+    containers:
+    - command:
+      - bash
+      - -ce
+      - |
+        prop_replace () {
+          target_file=${NIFI_HOME}/conf/nifi.properties
+          echo 'replacing target file ' ${target_file}
+          sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}
+        }
+
+        FQDN=$(hostname -f)
+
+        cat "${NIFI_HOME}/conf/nifi.temp" > "${NIFI_HOME}/conf/nifi.properties"
+
+        if [[ $(grep $(hostname) conf/authorizers.temp) ]]; then
+          cat "${NIFI_HOME}/conf/authorizers.temp" > "${NIFI_HOME}/conf/authorizers.xml"
+        else
+          cat "${NIFI_HOME}/conf/authorizers.empty" > "${NIFI_HOME}/conf/authorizers.xml"
+        fi
+
+        prop_replace nifi.remote.input.host ${FQDN}
+        prop_replace nifi.cluster.node.address ${FQDN}
+        prop_replace nifi.zookeeper.connect.string ${NIFI_ZOOKEEPER_CONNECT_STRING}
+
+        exec bin/nifi.sh run
+      env:
+      - name: NIFI_ZOOKEEPER_CONNECT_STRING
+        value: nifi-zookeeper:2181
+      image: apache/nifi:1.9.2
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - bash
+            - -c
+            - |
+              $NIFI_HOME/bin/nifi.sh stop
+      livenessProbe:
+        failureThreshold: 3
+        initialDelaySeconds: 90
+        periodSeconds: 60
+        successThreshold: 1
+        tcpSocket:
+          port: 8080
+        timeoutSeconds: 1
+      name: server
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      - containerPort: 6007
+        name: cluster
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - bash
+          - -c
+          - |
+            curl -kv \
+              http://$(hostname -f):8080/nifi-api/controller/cluster > $NIFI_BASE_DIR/data/cluster.state
+            STATUS=$(jq -r ".cluster.nodes[] | select((.address==\"$(hostname -f)\") or .address==\"localhost\") | .status" $NIFI_BASE_DIR/data/cluster.state)
+
+            if [[ ! $STATUS = "CONNECTED" ]]; then
+              echo "Node not found with CONNECTED state. Full cluster state:"
+              jq . $NIFI_BASE_DIR/data/cluster.state
+              exit 1
+            fi
+        failureThreshold: 3
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/nifi/data
+        name: data
+      - mountPath: /opt/nifi/flowfile_repository
+        name: flowfile-repository
+      - mountPath: /opt/nifi/content_repository
+        name: content-repository
+      - mountPath: /opt/nifi/provenance_repository
+        name: provenance-repository
+      - mountPath: /opt/nifi/nifi-current/logs
+        name: logs
+      - mountPath: /opt/nifi/nifi-current/conf/bootstrap.conf
+        name: bootstrap-conf
+        subPath: bootstrap.conf
+      - mountPath: /opt/nifi/nifi-current/conf/nifi.temp
+        name: nifi-properties
+        subPath: nifi.temp
+      - mountPath: /opt/nifi/nifi-current/conf/authorizers.temp
+        name: authorizers-temp
+        subPath: authorizers.temp
+      - mountPath: /opt/nifi/nifi-current/conf/authorizers.empty
+        name: authorizers-empty
+        subPath: authorizers.empty
+      - mountPath: /opt/nifi/nifi-current/conf/bootstrap-notification-services.xml
+        name: bootstrap-notification-services-xml
+        subPath: bootstrap-notification-services.xml
+      - mountPath: /opt/nifi/nifi-current/conf/logback.xml
+        name: logback-xml
+        subPath: logback.xml
+      - mountPath: /opt/nifi/nifi-current/conf/login-identity-providers.xml
+        name: login-identity-providers-xml
+        subPath: login-identity-providers.xml
+      - mountPath: /opt/nifi/nifi-current/conf/state-management.xml
+        name: state-management-xml
+        subPath: state-management.xml
+      - mountPath: /opt/nifi/nifi-current/conf/zookeeper.properties
+        name: zookeeper-properties
+        subPath: zookeeper.properties
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    - args:
+      - tail
+      - -n+1
+      - -F
+      - /var/log/nifi-app.log
+      image: ez123/alpine-tini
+      imagePullPolicy: Always
+      name: app-log
+      resources:
+        limits:
+          cpu: 50m
+          memory: 50Mi
+        requests:
+          cpu: 10m
+          memory: 10Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/log
+        name: logs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    - args:
+      - tail
+      - -n+1
+      - -F
+      - /var/log/nifi-bootstrap.log
+      image: ez123/alpine-tini
+      imagePullPolicy: Always
+      name: bootstrap-log
+      resources:
+        limits:
+          cpu: 50m
+          memory: 50Mi
+        requests:
+          cpu: 10m
+          memory: 10Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/log
+        name: logs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    - args:
+      - tail
+      - -n+1
+      - -F
+      - /var/log/nifi-user.log
+      image: ez123/alpine-tini
+      imagePullPolicy: Always
+      name: user-log
+      resources:
+        limits:
+          cpu: 50m
+          memory: 50Mi
+        requests:
+          cpu: 10m
+          memory: 10Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/log
+        name: logs
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: nifi-0
+    initContainers:
+    - command:
+      - sh
+      - -c
+      - |
+        echo trying to contact nifi-zookeeper 2181
+        until nc -vzw 1 nifi-zookeeper 2181; do
+          echo "waiting for zookeeper..."
+          sleep 2
+        done
+      image: busybox
+      imagePullPolicy: Always
+      name: zookeeper
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+      runAsUser: 1000
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: nifi-headless
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: bootstrap.conf
+          path: bootstrap.conf
+        name: nifi-config
+      name: bootstrap-conf
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: nifi.properties
+          path: nifi.temp
+        name: nifi-config
+      name: nifi-properties
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: authorizers.xml
+          path: authorizers.temp
+        name: nifi-config
+      name: authorizers-temp
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: authorizers-empty.xml
+          path: authorizers.empty
+        name: nifi-config
+      name: authorizers-empty
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: bootstrap-notification-services.xml
+          path: bootstrap-notification-services.xml
+        name: nifi-config
+      name: bootstrap-notification-services-xml
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: logback.xml
+          path: logback.xml
+        name: nifi-config
+      name: logback-xml
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: login-identity-providers.xml
+          path: login-identity-providers.xml
+        name: nifi-config
+      name: login-identity-providers-xml
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: state-management.xml
+          path: state-management.xml
+        name: nifi-config
+      name: state-management-xml
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: zookeeper.properties
+          path: zookeeper.properties
+        name: nifi-config
+      name: zookeeper-properties
+    - emptyDir: {}
+      name: data
+    - emptyDir: {}
+      name: flowfile-repository
+    - emptyDir: {}
+      name: content-repository
+    - emptyDir: {}
+      name: provenance-repository
+    - emptyDir: {}
+      name: logs
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:57Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:15:13Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-30T14:15:13Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-24T13:15:10Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://86095337693e1a90a987e43f0b284d3eba9a783565e9762cae4a2ad78e88f4c3
+      image: ez123/alpine-tini:latest
+      imageID: docker-pullable://ez123/alpine-tini@sha256:ad391da9bd95c8d87b9e8eb4f9728dc63c663a89b7434fa8c193aa41669a7c06
+      lastState:
+        terminated:
+          containerID: docker://3eddd86b7157475b814d58eec8bb120f56efaad135ada9d37697735337686b7b
+          exitCode: 143
+          finishedAt: "2019-08-29T15:32:58Z"
+          reason: Error
+          startedAt: "2019-08-29T14:57:12Z"
+      name: app-log
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:59Z"
+    - containerID: docker://c76c8212dd694fb072d4c64953a9cf3e1295a61f41025b225f59c4c1a5958ff3
+      image: ez123/alpine-tini:latest
+      imageID: docker-pullable://ez123/alpine-tini@sha256:ad391da9bd95c8d87b9e8eb4f9728dc63c663a89b7434fa8c193aa41669a7c06
+      lastState:
+        terminated:
+          containerID: docker://1a9680c28cb3ad40080518d2083cb7bb31affae505377555ba1680f1d133001b
+          exitCode: 143
+          finishedAt: "2019-08-29T15:32:58Z"
+          reason: Error
+          startedAt: "2019-08-29T14:57:14Z"
+      name: bootstrap-log
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:34:01Z"
+    - containerID: docker://e8bdd4554d436511532315a08c2a9fdbd7436327075471e89827225a4ee538f2
+      image: apache/nifi:1.9.2
+      imageID: docker-pullable://apache/nifi@sha256:3a4cc9b4a93e40fa1f1976b33ce9b945f032f3302826b53061983cfc4498fb7b
+      lastState:
+        terminated:
+          containerID: docker://13bac46c6b32e840f10c5b3a3d104b9980c15c35250d2b8a301b22cb0a701cfc
+          exitCode: 143
+          finishedAt: "2019-08-29T15:33:02Z"
+          reason: Error
+          startedAt: "2019-08-29T14:57:11Z"
+      name: server
+      ready: true
+      restartCount: 119
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:57Z"
+    - containerID: docker://563a82b15615643332d019f48d22eddcb5ad8270b22a2be21515530a855b17d3
+      image: ez123/alpine-tini:latest
+      imageID: docker-pullable://ez123/alpine-tini@sha256:ad391da9bd95c8d87b9e8eb4f9728dc63c663a89b7434fa8c193aa41669a7c06
+      lastState:
+        terminated:
+          containerID: docker://1af4f9475e72c4d73207c4d7d1a559d5033eb28381fb32e4144ad660f122f998
+          exitCode: 143
+          finishedAt: "2019-08-29T15:32:58Z"
+          reason: Error
+          startedAt: "2019-08-29T14:57:15Z"
+      name: user-log
+      ready: true
+      restartCount: 2
+      state:
+        running:
+          startedAt: "2019-08-29T15:34:02Z"
+    hostIP: 172.20.1.152
+    initContainerStatuses:
+    - containerID: docker://d77c9e5defa8802ae814a5992a1fd7a73b702e38cddfaf986d22806806b093da
+      image: busybox:latest
+      imageID: docker-pullable://busybox@sha256:9f1003c480699be56815db0f8146ad2e22efea85129b5b5983d0e0fb52d9ab70
+      lastState: {}
+      name: zookeeper
+      ready: true
+      restartCount: 2
+      state:
+        terminated:
+          containerID: docker://d77c9e5defa8802ae814a5992a1fd7a73b702e38cddfaf986d22806806b093da
+          exitCode: 0
+          finishedAt: "2019-08-29T15:33:56Z"
+          reason: Completed
+          startedAt: "2019-08-29T15:33:26Z"
+    phase: Running
+    podIP: 192.168.41.206
+    qosClass: Burstable
+    startTime: "2019-08-24T13:15:10Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.200/32
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    generateName: nifi-zookeeper-
+    labels:
+      app: zookeeper
+      component: server
+      controller-revision-hash: nifi-zookeeper-74cf47d66d
+      release: nifi
+      statefulset.kubernetes.io/pod-name: nifi-zookeeper-0
+    name: nifi-zookeeper-0
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: nifi-zookeeper
+      uid: d3a563b0-d086-4d40-af68-8e6bd2efe6fd
+    resourceVersion: "1014010"
+    selfLink: /api/v1/namespaces/bigdata/pods/nifi-zookeeper-0
+    uid: 535f85dc-e410-45a1-b06b-b6088a64aff0
+  spec:
+    containers:
+    - command:
+      - /bin/bash
+      - -xec
+      - zkGenConfig.sh && exec zkServer.sh start-foreground
+      env:
+      - name: ZK_REPLICAS
+        value: "3"
+      - name: JMXAUTH
+        value: "false"
+      - name: JMXDISABLE
+        value: "false"
+      - name: JMXPORT
+        value: "1099"
+      - name: JMXSSL
+        value: "false"
+      - name: ZK_CLIENT_PORT
+        value: "2181"
+      - name: ZK_ELECTION_PORT
+        value: "3888"
+      - name: ZK_HEAP_SIZE
+        value: 2G
+      - name: ZK_INIT_LIMIT
+        value: "5"
+      - name: ZK_LOG_LEVEL
+        value: INFO
+      - name: ZK_MAX_CLIENT_CNXNS
+        value: "60"
+      - name: ZK_MAX_SESSION_TIMEOUT
+        value: "40000"
+      - name: ZK_MIN_SESSION_TIMEOUT
+        value: "4000"
+      - name: ZK_PURGE_INTERVAL
+        value: "0"
+      - name: ZK_SERVER_PORT
+        value: "2888"
+      - name: ZK_SNAP_RETAIN_COUNT
+        value: "3"
+      - name: ZK_SYNC_LIMIT
+        value: "10"
+      - name: ZK_TICK_TIME
+        value: "2000"
+      image: gcr.io/google_samples/k8szk:v3
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - zkOk.sh
+        failureThreshold: 3
+        initialDelaySeconds: 20
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: zookeeper
+      ports:
+      - containerPort: 2181
+        name: client
+        protocol: TCP
+      - containerPort: 3888
+        name: election
+        protocol: TCP
+      - containerPort: 2888
+        name: server
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - zkOk.sh
+        failureThreshold: 3
+        initialDelaySeconds: 20
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/zookeeper
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: nifi-zookeeper-0
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+      runAsUser: 1000
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: nifi-zookeeper-headless
+    terminationGracePeriodSeconds: 1800
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: data-nifi-zookeeper-0
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-24T13:15:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:55Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:55Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-24T13:15:12Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://c56ae567b9c789495589958bb682a6916ff57cfb081fe9511d927d1ef64bcd09
+      image: gcr.io/google_samples/k8szk:v3
+      imageID: docker-pullable://gcr.io/google_samples/k8szk@sha256:eee48b4ab091324993baec42ee542f26836acfd24821eb3891e5a7c281b80dad
+      lastState:
+        terminated:
+          containerID: docker://ea32b24a45aa58691891f6d22e2fb57edbb6c742b4c9abcafd997e3e7871bc95
+          exitCode: 143
+          finishedAt: "2019-08-29T15:32:58Z"
+          reason: Error
+          startedAt: "2019-08-29T14:56:33Z"
+      name: zookeeper
+      ready: true
+      restartCount: 5
+      state:
+        running:
+          startedAt: "2019-08-29T15:33:30Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.200
+    qosClass: BestEffort
+    startTime: "2019-08-24T13:15:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      cni.projectcalico.org/podIP: 192.168.41.239/32
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    generateName: worker-565c7c858-
+    labels:
+      pod-template-hash: 565c7c858
+      presto: worker
+    name: worker-565c7c858-pjlpg
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: worker-565c7c858
+      uid: 819e7527-41a4-43d3-b566-376ba5bfcfcf
+    resourceVersion: "1169816"
+    selfLink: /api/v1/namespaces/bigdata/pods/worker-565c7c858-pjlpg
+    uid: 04e68034-f848-42c1-a8f8-036157380561
+  spec:
+    containers:
+    - envFrom:
+      - configMapRef:
+          name: prestocfg
+      image: johandry/presto
+      imagePullPolicy: Always
+      livenessProbe:
+        exec:
+          command:
+          - /etc/init.d/presto status | grep -q 'Running as'
+        failureThreshold: 3
+        periodSeconds: 300
+        successThreshold: 1
+        timeoutSeconds: 10
+      name: worker
+      ports:
+      - containerPort: 8080
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-7mswx
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: jay-apachecon2019.novalocal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-7mswx
+      secret:
+        defaultMode: 420
+        secretName: default-token-7mswx
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T17:03:03Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-29T15:33:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2019-08-26T17:03:03Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://c6cdd54bc4e0031e156f74a165e3dae8ce725eef2a06cb3f418954322e27b662
+      image: johandry/presto:latest
+      imageID: docker-pullable://johandry/presto@sha256:ed5a47cd302a92098397a62294d2e9099534856a865bd46369569b56ffb7c74b
+      lastState:
+        terminated:
+          containerID: docker://34a67968c3c709815dd7a54f4839bc66dcd72c9063f88ff6681fd0f05e247bfb
+          exitCode: 137
+          finishedAt: "2019-08-30T14:15:02Z"
+          reason: Error
+          startedAt: "2019-08-30T14:00:04Z"
+      name: worker
+      ready: true
+      restartCount: 365
+      state:
+        running:
+          startedAt: "2019-08-30T14:15:04Z"
+    hostIP: 172.20.1.152
+    phase: Running
+    podIP: 192.168.41.239
+    qosClass: BestEffort
+    startTime: "2019-08-26T17:03:03Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:20:04Z"
+    labels:
+      chart: spark-1.0.0
+      component: dangling-greyhound-livy
+      heritage: Tiller
+      release: dangling-greyhound
+    name: dangling-greyhound-livy
+    namespace: bigdata
+    resourceVersion: "92488"
+    selfLink: /api/v1/namespaces/bigdata/services/dangling-greyhound-livy
+    uid: 9d867958-e2f3-4b84-b5ad-07f63382bad7
+  spec:
+    clusterIP: 10.103.251.10
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: http
+      nodePort: 31779
+      port: 8998
+      protocol: TCP
+      targetPort: 8998
+    selector:
+      component: dangling-greyhound-livy
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:20:04Z"
+    labels:
+      chart: spark-1.0.0
+      component: dangling-greyhound-spark-master
+      heritage: Tiller
+      release: dangling-greyhound
+    name: dangling-greyhound-master
+    namespace: bigdata
+    resourceVersion: "92491"
+    selfLink: /api/v1/namespaces/bigdata/services/dangling-greyhound-master
+    uid: a3d27957-cc32-4dae-a286-103b3d72c055
+  spec:
+    clusterIP: 10.102.3.228
+    ports:
+    - port: 7077
+      protocol: TCP
+      targetPort: 7077
+    selector:
+      component: dangling-greyhound-spark-master
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:20:04Z"
+    labels:
+      chart: spark-1.0.0
+      component: dangling-greyhound-spark-master
+      heritage: Tiller
+      release: dangling-greyhound
+    name: dangling-greyhound-webui
+    namespace: bigdata
+    resourceVersion: "92496"
+    selfLink: /api/v1/namespaces/bigdata/services/dangling-greyhound-webui
+    uid: 91ec504e-af71-46d1-bd22-a6de05db7aa6
+  spec:
+    clusterIP: 10.105.161.10
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: web-port
+      nodePort: 32722
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: spark-port
+      nodePort: 30272
+      port: 7077
+      protocol: TCP
+      targetPort: 7077
+    selector:
+      component: dangling-greyhound-spark-master
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:20:04Z"
+    name: dangling-greyhound-workerlb
+    namespace: bigdata
+    resourceVersion: "92505"
+    selfLink: /api/v1/namespaces/bigdata/services/dangling-greyhound-workerlb
+    uid: f77066b5-573a-494d-95d9-6830964ae5bf
+  spec:
+    clusterIP: 10.100.12.76
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: driverport
+      nodePort: 31430
+      port: 8085
+      protocol: TCP
+      targetPort: 8085
+    - name: webui
+      nodePort: 32250
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    - name: monitor
+      nodePort: 30038
+      port: 4040
+      protocol: TCP
+      targetPort: 4040
+    - name: server
+      nodePort: 30468
+      port: 8888
+      protocol: TCP
+      targetPort: 8888
+    - name: misc
+      nodePort: 32612
+      port: 8889
+      protocol: TCP
+      targetPort: 8889
+    - name: webui2
+      nodePort: 32658
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      component: dangling-greyhound-spark-worker
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:20:04Z"
+    labels:
+      chart: spark-1.0.0
+      component: dangling-greyhound-zeppelin
+      heritage: Tiller
+      release: dangling-greyhound
+    name: dangling-greyhound-zeppelin
+    namespace: bigdata
+    resourceVersion: "92509"
+    selfLink: /api/v1/namespaces/bigdata/services/dangling-greyhound-zeppelin
+    uid: ead40da9-0fc8-48b7-b7fc-778a78163ddb
+  spec:
+    clusterIP: 10.107.2.106
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: http
+      nodePort: 30732
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      component: dangling-greyhound-zeppelin
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-livy
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-livy
+    namespace: bigdata
+    resourceVersion: "92682"
+    selfLink: /api/v1/namespaces/bigdata/services/fantastic-chipmunk-livy
+    uid: 46e26bf3-7e71-4750-8871-68efc6ae09c0
+  spec:
+    clusterIP: 10.106.191.165
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: http
+      nodePort: 31109
+      port: 8998
+      protocol: TCP
+      targetPort: 8998
+    selector:
+      component: fantastic-chipmunk-livy
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master
+    namespace: bigdata
+    resourceVersion: "92690"
+    selfLink: /api/v1/namespaces/bigdata/services/fantastic-chipmunk-master
+    uid: d426ca2e-d5cb-417f-a945-a57f53524add
+  spec:
+    clusterIP: 10.103.148.157
+    ports:
+    - port: 7077
+      protocol: TCP
+      targetPort: 7077
+    selector:
+      component: fantastic-chipmunk-spark-master
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-webui
+    namespace: bigdata
+    resourceVersion: "92687"
+    selfLink: /api/v1/namespaces/bigdata/services/fantastic-chipmunk-webui
+    uid: 1061e549-93a3-458f-8967-e1a11dfc458f
+  spec:
+    clusterIP: 10.96.52.22
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: web-port
+      nodePort: 31675
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: spark-port
+      nodePort: 30639
+      port: 7077
+      protocol: TCP
+      targetPort: 7077
+    selector:
+      component: fantastic-chipmunk-spark-master
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    name: fantastic-chipmunk-workerlb
+    namespace: bigdata
+    resourceVersion: "92699"
+    selfLink: /api/v1/namespaces/bigdata/services/fantastic-chipmunk-workerlb
+    uid: 750a238d-09f1-4139-b5c3-5d57613b2c02
+  spec:
+    clusterIP: 10.110.255.4
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: driverport
+      nodePort: 30677
+      port: 8085
+      protocol: TCP
+      targetPort: 8085
+    - name: webui
+      nodePort: 31120
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    - name: monitor
+      nodePort: 32706
+      port: 4040
+      protocol: TCP
+      targetPort: 4040
+    - name: server
+      nodePort: 30825
+      port: 8888
+      protocol: TCP
+      targetPort: 8888
+    - name: misc
+      nodePort: 31763
+      port: 8889
+      protocol: TCP
+      targetPort: 8889
+    - name: webui2
+      nodePort: 32041
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      component: fantastic-chipmunk-spark-worker
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-zeppelin
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-zeppelin
+    namespace: bigdata
+    resourceVersion: "92703"
+    selfLink: /api/v1/namespaces/bigdata/services/fantastic-chipmunk-zeppelin
+    uid: 1e71cb6f-ab83-45e5-a95c-6915b9a7c20f
+  spec:
+    clusterIP: 10.104.48.187
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: http
+      nodePort: 31399
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      component: fantastic-chipmunk-zeppelin
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hbase-master
+      heritage: Tiller
+      release: hbase
+    name: hbase-hbase-master
+    namespace: bigdata
+    resourceVersion: "571243"
+    selfLink: /api/v1/namespaces/bigdata/services/hbase-hbase-master
+    uid: ad36144e-def2-48cf-9eb7-ecbbe5bc1013
+  spec:
+    clusterIP: None
+    ports:
+    - name: restapi
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: thriftapi
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+    - name: master
+      port: 16000
+      protocol: TCP
+      targetPort: 16000
+    - name: masterinfo
+      port: 16010
+      protocol: TCP
+      targetPort: 16010
+    selector:
+      app: hbase
+      component: hbase-master
+      release: hbase
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hbase-rs
+      heritage: Tiller
+      release: hbase
+    name: hbase-hbase-rs
+    namespace: bigdata
+    resourceVersion: "571245"
+    selfLink: /api/v1/namespaces/bigdata/services/hbase-hbase-rs
+    uid: 3befabd0-d8ee-46a5-9953-8db9a2f1bf39
+  spec:
+    clusterIP: None
+    ports:
+    - name: rs
+      port: 16020
+      protocol: TCP
+      targetPort: 16020
+    - name: rsinfo
+      port: 16030
+      protocol: TCP
+      targetPort: 16030
+    selector:
+      app: hbase
+      component: hbase-rs
+      release: hbase
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hdfs-dn
+      heritage: Tiller
+      release: hbase
+    name: hbase-hdfs-dn
+    namespace: bigdata
+    resourceVersion: "571248"
+    selfLink: /api/v1/namespaces/bigdata/services/hbase-hdfs-dn
+    uid: 52342908-1916-4227-8f84-7cfa1de21a6c
+  spec:
+    clusterIP: None
+    ports:
+    - name: dfs
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: webhdfs
+      port: 50075
+      protocol: TCP
+      targetPort: 50075
+    selector:
+      app: hbase
+      component: hdfs-dn
+      release: hbase
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hdfs-nn
+      heritage: Tiller
+      release: hbase
+    name: hbase-hdfs-nn
+    namespace: bigdata
+    resourceVersion: "571251"
+    selfLink: /api/v1/namespaces/bigdata/services/hbase-hdfs-nn
+    uid: 3748fe0e-46fb-4b94-b541-5939114917fc
+  spec:
+    clusterIP: None
+    ports:
+    - name: dfs
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: webhdfs
+      port: 50070
+      protocol: TCP
+      targetPort: 50070
+    selector:
+      app: hbase
+      component: hdfs-nn
+      release: hbase
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-25T13:13:18Z"
+    labels:
+      app: kafka
+      chart: kafka-0.17.0
+      heritage: Tiller
+      release: my-kafka
+    name: my-kafka
+    namespace: bigdata
+    resourceVersion: "381480"
+    selfLink: /api/v1/namespaces/bigdata/services/my-kafka
+    uid: 582cb92d-19a9-4f40-ad09-0f0c803c15d2
+  spec:
+    clusterIP: 10.100.138.173
+    ports:
+    - name: broker
+      port: 9092
+      protocol: TCP
+      targetPort: kafka
+    selector:
+      app: kafka
+      release: my-kafka
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2019-08-25T13:13:18Z"
+    labels:
+      app: kafka
+      chart: kafka-0.17.0
+      heritage: Tiller
+      release: my-kafka
+    name: my-kafka-headless
+    namespace: bigdata
+    resourceVersion: "381482"
+    selfLink: /api/v1/namespaces/bigdata/services/my-kafka-headless
+    uid: 88530037-a6af-4927-a3ad-d70516c30a60
+  spec:
+    clusterIP: None
+    ports:
+    - name: broker
+      port: 9092
+      protocol: TCP
+      targetPort: 9092
+    selector:
+      app: kafka
+      release: my-kafka
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-25T13:13:18Z"
+    labels:
+      app: zookeeper
+      chart: zookeeper-2.0.0
+      heritage: Tiller
+      release: my-kafka
+    name: my-kafka-zookeeper
+    namespace: bigdata
+    resourceVersion: "381477"
+    selfLink: /api/v1/namespaces/bigdata/services/my-kafka-zookeeper
+    uid: 3815dc85-39d4-48c3-b319-12eb3adea2fd
+  spec:
+    clusterIP: 10.104.227.155
+    ports:
+    - name: client
+      port: 2181
+      protocol: TCP
+      targetPort: client
+    selector:
+      app: zookeeper
+      release: my-kafka
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-25T13:13:18Z"
+    labels:
+      app: zookeeper
+      chart: zookeeper-2.0.0
+      heritage: Tiller
+      release: my-kafka
+    name: my-kafka-zookeeper-headless
+    namespace: bigdata
+    resourceVersion: "381473"
+    selfLink: /api/v1/namespaces/bigdata/services/my-kafka-zookeeper-headless
+    uid: 2a007c89-a32b-41e2-a186-e6aecda81d49
+  spec:
+    clusterIP: None
+    ports:
+    - name: client
+      port: 2181
+      protocol: TCP
+      targetPort: client
+    - name: election
+      port: 3888
+      protocol: TCP
+      targetPort: election
+    - name: server
+      port: 2888
+      protocol: TCP
+      targetPort: server
+    selector:
+      app: zookeeper
+      release: my-kafka
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    labels:
+      app: nifi
+      chart: nifi-0.1.5
+      heritage: Tiller
+      release: nifi
+    name: nifi
+    namespace: bigdata
+    resourceVersion: "190390"
+    selfLink: /api/v1/namespaces/bigdata/services/nifi
+    uid: c876fcb2-830c-4104-8f33-4df54b685c82
+  spec:
+    clusterIP: 10.100.182.170
+    externalTrafficPolicy: Cluster
+    ports:
+    - name: http
+      nodePort: 31770
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: nifi
+      release: nifi
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    labels:
+      app: nifi
+      chart: nifi-0.1.5
+      heritage: Tiller
+      release: nifi
+    name: nifi-headless
+    namespace: bigdata
+    resourceVersion: "190386"
+    selfLink: /api/v1/namespaces/bigdata/services/nifi-headless
+    uid: 919ab5e3-1cd6-4254-ae85-8b3af3f72379
+  spec:
+    clusterIP: None
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: cluster
+      port: 6007
+      protocol: TCP
+      targetPort: 6007
+    selector:
+      app: nifi
+      release: nifi
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    labels:
+      app: zookeeper
+      chart: zookeeper-1.3.1
+      heritage: Tiller
+      release: nifi
+    name: nifi-zookeeper
+    namespace: bigdata
+    resourceVersion: "190384"
+    selfLink: /api/v1/namespaces/bigdata/services/nifi-zookeeper
+    uid: 60db4c08-7d56-42ea-a1f4-b4a30501e394
+  spec:
+    clusterIP: 10.101.147.50
+    ports:
+    - name: client
+      port: 2181
+      protocol: TCP
+      targetPort: client
+    selector:
+      app: zookeeper
+      release: nifi
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    labels:
+      app: zookeeper
+      chart: zookeeper-1.3.1
+      heritage: Tiller
+      release: nifi
+    name: nifi-zookeeper-headless
+    namespace: bigdata
+    resourceVersion: "190381"
+    selfLink: /api/v1/namespaces/bigdata/services/nifi-zookeeper-headless
+    uid: b5ee19ec-8200-4c63-9446-9d91fef4072a
+  spec:
+    clusterIP: None
+    ports:
+    - name: client
+      port: 2181
+      protocol: TCP
+      targetPort: client
+    - name: election
+      port: 3888
+      protocol: TCP
+      targetPort: election
+    - name: server
+      port: 2888
+      protocol: TCP
+      targetPort: server
+    selector:
+      app: zookeeper
+      release: nifi
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    name: presto
+    namespace: bigdata
+    resourceVersion: "603434"
+    selfLink: /api/v1/namespaces/bigdata/services/presto
+    uid: 82d1a92d-f86d-41c4-b80e-b3605a9ddc0e
+  spec:
+    clusterIP: 10.111.209.84
+    externalTrafficPolicy: Cluster
+    ports:
+    - nodePort: 30492
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      presto: coordinator
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    generation: 1
+    labels:
+      presto: coordinator
+    name: coordinator
+    namespace: bigdata
+    resourceVersion: "1009004"
+    selfLink: /apis/apps/v1/namespaces/bigdata/deployments/coordinator
+    uid: 82211583-f67d-4169-a6b0-cbdea9d47c22
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 2
+    selector:
+      matchLabels:
+        presto: coordinator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          presto: coordinator
+      spec:
+        containers:
+        - envFrom:
+          - configMapRef:
+              name: prestocfg
+          image: johandry/presto
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /etc/init.d/presto status | grep -q 'Running as'
+            failureThreshold: 3
+            periodSeconds: 300
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: presto-coordinator
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2019-08-26T17:03:03Z"
+      lastUpdateTime: "2019-08-26T17:03:06Z"
+      message: ReplicaSet "coordinator-56956c8d84" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2019-08-29T14:57:06Z"
+      lastUpdateTime: "2019-08-29T14:57:06Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 1
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-livy
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-livy
+    namespace: bigdata
+    resourceVersion: "1008998"
+    selfLink: /apis/apps/v1/namespaces/bigdata/deployments/fantastic-chipmunk-livy
+    uid: b90e5965-86d2-46c9-b316-f18bf59c30af
+  spec:
+    progressDeadlineSeconds: 2147483647
+    replicas: 1
+    revisionHistoryLimit: 2147483647
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-livy
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-livy
+          heritage: Tiller
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - env:
+          - name: SPARK_MASTER
+            value: spark://fantastic-chipmunk-master:7077
+          - name: SPARK_HOME
+            value: /opt/spark
+          - name: HADOOP_HOME
+            value: /opt/hadoop
+          - name: SPARK_CONF_DIR
+            value: /opt/spark/conf
+          - name: HOST
+            value: 0.0.0.0
+          image: mcr.microsoft.com/mmlspark/livy:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-livy
+          ports:
+          - containerPort: 8998
+            name: http
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2019-08-23T15:21:00Z"
+      lastUpdateTime: "2019-08-23T15:21:00Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 4
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master
+    namespace: bigdata
+    resourceVersion: "1008863"
+    selfLink: /apis/apps/v1/namespaces/bigdata/deployments/fantastic-chipmunk-master
+    uid: 579b17c2-15ae-463a-8dc1-561a1fc29c94
+  spec:
+    progressDeadlineSeconds: 2147483647
+    replicas: 1
+    revisionHistoryLimit: 2147483647
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-master
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-master
+          heritage: Tiller
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - args:
+          - echo $(hostname -i) fantastic-chipmunk-master >> /etc/hosts; /opt/spark/bin/spark-class
+            org.apache.spark.deploy.master.Master
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_MASTER_HOST
+            value: fantastic-chipmunk-master
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-master
+          ports:
+          - containerPort: 7077
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/spark/conf/
+            name: spark-conf-vol
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: spark-conf
+          name: spark-conf-vol
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2019-08-23T15:21:00Z"
+      lastUpdateTime: "2019-08-23T15:21:00Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 4
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 2
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-worker
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-worker
+    namespace: bigdata
+    resourceVersion: "1171248"
+    selfLink: /apis/apps/v1/namespaces/bigdata/deployments/fantastic-chipmunk-worker
+    uid: 9cbcfdb4-6f2d-4d3a-834a-f24c5e2d7fbb
+  spec:
+    progressDeadlineSeconds: 2147483647
+    replicas: 1
+    revisionHistoryLimit: 2147483647
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-worker
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-worker
+          heritage: Tiller
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - command:
+          - /opt/spark/bin/spark-class
+          - org.apache.spark.deploy.worker.Worker
+          - spark://fantastic-chipmunk-master:7077
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_WORKER_MEMORY
+            value: 1g
+          - name: SPARK_WORKER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-worker
+          ports:
+          - containerPort: 8081
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2019-08-29T14:56:57Z"
+      lastUpdateTime: "2019-08-29T14:56:57Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 1
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-zeppelin
+      heritage: Tiller
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-zeppelin
+    namespace: bigdata
+    resourceVersion: "1008923"
+    selfLink: /apis/apps/v1/namespaces/bigdata/deployments/fantastic-chipmunk-zeppelin
+    uid: d3cea823-cf8e-4db2-9d22-43056290c4b8
+  spec:
+    progressDeadlineSeconds: 2147483647
+    replicas: 1
+    revisionHistoryLimit: 2147483647
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-zeppelin
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-zeppelin
+          heritage: Tiller
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - env:
+          - name: SPARK_MASTER
+            value: spark://fantastic-chipmunk-master:7077
+          image: mcr.microsoft.com/mmlspark/zeppelin:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-zeppelin
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2019-08-23T15:21:00Z"
+      lastUpdateTime: "2019-08-23T15:21:00Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    generation: 1
+    labels:
+      presto: worker
+    name: worker
+    namespace: bigdata
+    resourceVersion: "1008907"
+    selfLink: /apis/apps/v1/namespaces/bigdata/deployments/worker
+    uid: e6832111-0a60-4296-84de-70d501d38f9f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 2
+    selector:
+      matchLabels:
+        presto: worker
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          presto: worker
+      spec:
+        containers:
+        - envFrom:
+          - configMapRef:
+              name: prestocfg
+          image: johandry/presto
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /etc/init.d/presto status | grep -q 'Running as'
+            failureThreshold: 3
+            periodSeconds: 300
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: worker
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2019-08-26T17:03:03Z"
+      lastUpdateTime: "2019-08-26T17:03:06Z"
+      message: ReplicaSet "worker-565c7c858" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2019-08-29T14:56:58Z"
+      lastUpdateTime: "2019-08-29T14:56:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    generation: 1
+    labels:
+      pod-template-hash: 56956c8d84
+      presto: coordinator
+    name: coordinator-56956c8d84
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: coordinator
+      uid: 82211583-f67d-4169-a6b0-cbdea9d47c22
+    resourceVersion: "1009003"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/coordinator-56956c8d84
+    uid: 3e726fd4-837f-433e-80f4-0feedfee7055
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        pod-template-hash: 56956c8d84
+        presto: coordinator
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 56956c8d84
+          presto: coordinator
+      spec:
+        containers:
+        - envFrom:
+          - configMapRef:
+              name: prestocfg
+          image: johandry/presto
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /etc/init.d/presto status | grep -q 'Running as'
+            failureThreshold: 3
+            periodSeconds: 300
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: presto-coordinator
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 1
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-livy
+      heritage: Tiller
+      pod-template-hash: 5856779cf8
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-livy-5856779cf8
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-livy
+      uid: b90e5965-86d2-46c9-b316-f18bf59c30af
+    resourceVersion: "1008997"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-livy-5856779cf8
+    uid: 90fecb3b-2ec8-416a-b5cc-ab6dea8e1e17
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-livy
+        pod-template-hash: 5856779cf8
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-livy
+          heritage: Tiller
+          pod-template-hash: 5856779cf8
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - env:
+          - name: SPARK_MASTER
+            value: spark://fantastic-chipmunk-master:7077
+          - name: SPARK_HOME
+            value: /opt/spark
+          - name: HADOOP_HOME
+            value: /opt/hadoop
+          - name: SPARK_CONF_DIR
+            value: /opt/spark/conf
+          - name: HOST
+            value: 0.0.0.0
+          image: mcr.microsoft.com/mmlspark/livy:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-livy
+          ports:
+          - containerPort: 8998
+            name: http
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2019-08-23T16:30:09Z"
+    generation: 1
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      pod-template-hash: 55f5945997
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master-55f5945997
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-master
+      uid: 579b17c2-15ae-463a-8dc1-561a1fc29c94
+    resourceVersion: "1008860"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-master-55f5945997
+    uid: 0b785f51-4864-4e4c-9d9b-fedfc77a20e6
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-master
+        pod-template-hash: 55f5945997
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-master
+          heritage: Tiller
+          pod-template-hash: 55f5945997
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - args:
+          - echo $(hostname -i) fantastic-chipmunk-master >> /etc/hosts; /opt/spark/bin/spark-class
+            org.apache.spark.deploy.master.Master
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_MASTER_HOST
+            value: fantastic-chipmunk-master
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-master
+          ports:
+          - containerPort: 7077
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/spark/conf/
+            name: spark-conf-vol
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: spark-conf
+          name: spark-conf-vol
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 2
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      pod-template-hash: 6bc86b7f7c
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master-6bc86b7f7c
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-master
+      uid: 579b17c2-15ae-463a-8dc1-561a1fc29c94
+    resourceVersion: "96740"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-master-6bc86b7f7c
+    uid: c77a06a5-26c3-443d-8426-c6ccd549b064
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-master
+        pod-template-hash: 6bc86b7f7c
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-master
+          heritage: Tiller
+          pod-template-hash: 6bc86b7f7c
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - args:
+          - echo $(hostname -i) fantastic-chipmunk-master >> /etc/hosts; /opt/spark/bin/spark-class
+            org.apache.spark.deploy.master.Master
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_MASTER_HOST
+            value: fantastic-chipmunk-master
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-master
+          ports:
+          - containerPort: 7077
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "3"
+    creationTimestamp: "2019-08-23T16:19:20Z"
+    generation: 2
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      pod-template-hash: 6d64f8875f
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master-6d64f8875f
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-master
+      uid: 579b17c2-15ae-463a-8dc1-561a1fc29c94
+    resourceVersion: "98238"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-master-6d64f8875f
+    uid: bda10514-dd36-4246-ab0c-d930f8d48d15
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-master
+        pod-template-hash: 6d64f8875f
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-master
+          heritage: Tiller
+          pod-template-hash: 6d64f8875f
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - args:
+          - echo $(hostname -i) fantastic-chipmunk-master >> /etc/hosts; /opt/spark/bin/spark-class
+            org.apache.spark.deploy.master.Master
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_MASTER_HOST
+            value: fantastic-chipmunk-master
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-master
+          ports:
+          - containerPort: 7077
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /a/opt/spark/conf/
+            name: spark-conf-vol
+            subPath: core-site.xml
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: spark-conf
+          name: spark-conf-vol
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2019-08-23T16:13:05Z"
+    generation: 2
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-master
+      heritage: Tiller
+      pod-template-hash: 775c54d89f
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-master-775c54d89f
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-master
+      uid: 579b17c2-15ae-463a-8dc1-561a1fc29c94
+    resourceVersion: "97374"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-master-775c54d89f
+    uid: bbbb30d0-8d82-484f-a0a0-9e5402bb06d8
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-master
+        pod-template-hash: 775c54d89f
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-master
+          heritage: Tiller
+          pod-template-hash: 775c54d89f
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - args:
+          - echo $(hostname -i) fantastic-chipmunk-master >> /etc/hosts; /opt/spark/bin/spark-class
+            org.apache.spark.deploy.master.Master
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_MASTER_HOST
+            value: fantastic-chipmunk-master
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-master
+          ports:
+          - containerPort: 7077
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/spark/conf/
+            name: spark-conf-vol
+            subPath: core-site.xml
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: spark-conf
+          name: spark-conf-vol
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 2
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-spark-worker
+      heritage: Tiller
+      pod-template-hash: 5f7f468b8f
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-worker-5f7f468b8f
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-worker
+      uid: 9cbcfdb4-6f2d-4d3a-834a-f24c5e2d7fbb
+    resourceVersion: "1171247"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-worker-5f7f468b8f
+    uid: a5878905-d313-4d24-a994-2593703b52cf
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-spark-worker
+        pod-template-hash: 5f7f468b8f
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-spark-worker
+          heritage: Tiller
+          pod-template-hash: 5f7f468b8f
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - command:
+          - /opt/spark/bin/spark-class
+          - org.apache.spark.deploy.worker.Worker
+          - spark://fantastic-chipmunk-master:7077
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: 1g
+          - name: SPARK_WORKER_MEMORY
+            value: 1g
+          - name: SPARK_WORKER_WEBUI_PORT
+            value: "8080"
+          image: mcr.microsoft.com/mmlspark/spark2.4:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-worker
+          ports:
+          - containerPort: 8081
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-23T15:21:00Z"
+    generation: 1
+    labels:
+      chart: spark-1.0.0
+      component: fantastic-chipmunk-zeppelin
+      heritage: Tiller
+      pod-template-hash: 7958b9477
+      release: fantastic-chipmunk
+    name: fantastic-chipmunk-zeppelin-7958b9477
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: fantastic-chipmunk-zeppelin
+      uid: d3cea823-cf8e-4db2-9d22-43056290c4b8
+    resourceVersion: "1008922"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/fantastic-chipmunk-zeppelin-7958b9477
+    uid: 6086d505-0520-4477-a9ad-7ce71012cedd
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        component: fantastic-chipmunk-zeppelin
+        pod-template-hash: 7958b9477
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          chart: spark-1.0.0
+          component: fantastic-chipmunk-zeppelin
+          heritage: Tiller
+          pod-template-hash: 7958b9477
+          release: fantastic-chipmunk
+      spec:
+        containers:
+        - env:
+          - name: SPARK_MASTER
+            value: spark://fantastic-chipmunk-master:7077
+          image: mcr.microsoft.com/mmlspark/zeppelin:v4_mini
+          imagePullPolicy: IfNotPresent
+          name: fantastic-chipmunk-zeppelin
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2019-08-26T17:03:03Z"
+    generation: 1
+    labels:
+      pod-template-hash: 565c7c858
+      presto: worker
+    name: worker-565c7c858
+    namespace: bigdata
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: worker
+      uid: e6832111-0a60-4296-84de-70d501d38f9f
+    resourceVersion: "1008906"
+    selfLink: /apis/apps/v1/namespaces/bigdata/replicasets/worker-565c7c858
+    uid: 819e7527-41a4-43d3-b566-376ba5bfcfcf
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        pod-template-hash: 565c7c858
+        presto: worker
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: 565c7c858
+          presto: worker
+      spec:
+        containers:
+        - envFrom:
+          - configMapRef:
+              name: prestocfg
+          image: johandry/presto
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - /etc/init.d/presto status | grep -q 'Running as'
+            failureThreshold: 3
+            periodSeconds: 300
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: worker
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      checksum/config: febfd73e7efbcdc57c1c5955eff9f414f440084a2766d00c6f58d2d2556bf9ee
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generation: 1
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hbase-master
+      heritage: Tiller
+      release: hbase
+    name: hbase-hbase-master
+    namespace: bigdata
+    resourceVersion: "1171147"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/hbase-hbase-master
+    uid: 1da528ed-7f5f-4a46-8fbe-f6a95bde98cb
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: hbase
+        component: hbase-master
+        release: hbase
+    serviceName: hbase-hbase-master
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: hbase
+          component: hbase-master
+          release: hbase
+      spec:
+        containers:
+        - command:
+          - /bin/bash
+          - /tmp/hbase-config/bootstrap.sh
+          image: pierrezemb/hbase-docker:distributed-1.3.1-hadoop-2.7.3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 16010
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: hbase-master
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 16010
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 10m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/hbase-config
+            name: hbase-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 0
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: hbase-configmap
+          name: hbase-config
+    updateStrategy:
+      type: OnDelete
+  status:
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: hbase-hbase-master-777764448f
+    observedGeneration: 1
+    replicas: 1
+    updateRevision: hbase-hbase-master-777764448f
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      checksum/config: febfd73e7efbcdc57c1c5955eff9f414f440084a2766d00c6f58d2d2556bf9ee
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generation: 2
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hbase-rs
+      heritage: Tiller
+      release: hbase
+    name: hbase-hbase-rs
+    namespace: bigdata
+    resourceVersion: "1171335"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/hbase-hbase-rs
+    uid: c29efb1c-d22b-4631-8d81-8b32c5770a8f
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: hbase
+        component: hbase-rs
+        release: hbase
+    serviceName: hbase-hbase-rs
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: hbase
+          component: hbase-rs
+          release: hbase
+      spec:
+        containers:
+        - command:
+          - /bin/bash
+          - /tmp/hbase-config/bootstrap.sh
+          image: pierrezemb/hbase-docker:distributed-1.3.1-hadoop-2.7.3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 16030
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: hbase-rs
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 16030
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 10m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/hbase-config
+            name: hbase-config
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 0
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: hbase-configmap
+          name: hbase-config
+    updateStrategy:
+      type: OnDelete
+  status:
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: hbase-hbase-rs-6c4b94fb99
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: hbase-hbase-rs-6c4b94fb99
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      checksum/config: febfd73e7efbcdc57c1c5955eff9f414f440084a2766d00c6f58d2d2556bf9ee
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generation: 1
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hdfs-dn
+      heritage: Tiller
+      release: hbase
+    name: hbase-hdfs-dn
+    namespace: bigdata
+    resourceVersion: "1171112"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/hbase-hdfs-dn
+    uid: a800304a-c2bf-4287-9148-df86b18e8e7b
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: hbase
+        component: hdfs-dn
+        release: hbase
+    serviceName: hbase-hdfs-dn
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: hbase
+          component: hdfs-dn
+          release: hbase
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: hbase
+                    component: hdfs-dn
+                    release: hbase
+                topologyKey: kubernetes.io/hostname
+              weight: 5
+        containers:
+        - command:
+          - /bin/bash
+          - /tmp/hadoop-config/bootstrap.sh
+          - -d
+          image: danisla/hadoop:2.7.3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 50075
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: hdfs-dn
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 50075
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 10m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/hadoop-config
+            name: hadoop-config
+          - mountPath: /root/hdfs/datanode
+            name: dfs
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 0
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: hadoop-configmap
+          name: hadoop-config
+        - emptyDir: {}
+          name: dfs
+    updateStrategy:
+      type: OnDelete
+  status:
+    collisionCount: 0
+    currentReplicas: 3
+    currentRevision: hbase-hdfs-dn-7558879b8d
+    observedGeneration: 1
+    replicas: 3
+    updateRevision: hbase-hdfs-dn-7558879b8d
+    updatedReplicas: 3
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    annotations:
+      checksum/config: febfd73e7efbcdc57c1c5955eff9f414f440084a2766d00c6f58d2d2556bf9ee
+    creationTimestamp: "2019-08-26T12:56:32Z"
+    generation: 1
+    labels:
+      app: hbase
+      chart: hbase-1.0.4
+      component: hdfs-nn
+      heritage: Tiller
+      release: hbase
+    name: hbase-hdfs-nn
+    namespace: bigdata
+    resourceVersion: "1014028"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/hbase-hdfs-nn
+    uid: b84feb7b-159f-418f-9f6f-13c165af4cc8
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: hbase
+        component: hdfs-nn
+        release: hbase
+    serviceName: hbase-hdfs-nn
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: hbase
+          component: hdfs-nn
+          release: hbase
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: hbase
+                    component: hdfs-nn
+                    release: hbase
+                topologyKey: kubernetes.io/hostname
+              weight: 5
+        containers:
+        - command:
+          - /bin/bash
+          - /tmp/hadoop-config/bootstrap.sh
+          - -d
+          image: danisla/hadoop:2.7.3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 50070
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: hdfs-nn
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 50070
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 10m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp/hadoop-config
+            name: hadoop-config
+          - mountPath: /root/hdfs/namenode
+            name: dfs
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 0
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: hadoop-configmap
+          name: hadoop-config
+        - emptyDir: {}
+          name: dfs
+    updateStrategy:
+      type: OnDelete
+  status:
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: hbase-hdfs-nn-6d7b5788d5
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: hbase-hdfs-nn-6d7b5788d5
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    creationTimestamp: "2019-08-25T13:13:18Z"
+    generation: 5
+    labels:
+      app: kafka
+      chart: kafka-0.17.0
+      heritage: Tiller
+      release: my-kafka
+    name: my-kafka
+    namespace: bigdata
+    resourceVersion: "1171450"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/my-kafka
+    uid: 40ed0540-8145-4abb-9010-20cdfad8f5fd
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: kafka
+        release: my-kafka
+    serviceName: my-kafka-headless
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: kafka
+          release: my-kafka
+      spec:
+        containers:
+        - command:
+          - sh
+          - -exc
+          - |
+            unset KAFKA_PORT && \
+            export KAFKA_BROKER_ID=${POD_NAME##*-} && \
+            export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${POD_IP}:9092 && \
+            exec /etc/confluent/docker/run
+          env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: KAFKA_HEAP_OPTS
+            value: -Xmx1G -Xms1G
+          - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+            value: "3"
+          - name: KAFKA_LOG_DIRS
+            value: /opt/kafka/data/logs
+          - name: KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE
+            value: "false"
+          - name: KAFKA_JMX_PORT
+            value: "5555"
+          envFrom:
+          - configMapRef:
+              name: kafka-cm
+          image: confluentinc/cp-kafka:5.0.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -ec
+              - /usr/bin/jps | /bin/grep -q SupportedKafka
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: kafka-broker
+          ports:
+          - containerPort: 9092
+            name: kafka
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: kafka
+            timeoutSeconds: 5
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/kafka/data
+            name: datadir
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 60
+    updateStrategy:
+      type: OnDelete
+    volumeClaimTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: datadir
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    collisionCount: 0
+    currentRevision: my-kafka-55755c89cb
+    observedGeneration: 5
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: my-kafka-86d8df5cb8
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    generation: 1
+    labels:
+      app: nifi
+      chart: nifi-0.1.5
+      heritage: Tiller
+      release: nifi
+    name: nifi
+    namespace: bigdata
+    resourceVersion: "1169834"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/nifi
+    uid: 400b6d61-4589-472e-8dc5-ce9721bac1e6
+  spec:
+    podManagementPolicy: Parallel
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: nifi
+        release: nifi
+    serviceName: nifi-headless
+    template:
+      metadata:
+        annotations:
+          security.alpha.kubernetes.io/sysctls: net.ipv4.ip_local_port_range=10000
+            65000
+        creationTimestamp: null
+        labels:
+          app: nifi
+          chart: nifi-0.1.5
+          heritage: Tiller
+          release: nifi
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: component
+                    operator: In
+                    values:
+                    - nifi
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        containers:
+        - command:
+          - bash
+          - -ce
+          - |
+            prop_replace () {
+              target_file=${NIFI_HOME}/conf/nifi.properties
+              echo 'replacing target file ' ${target_file}
+              sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}
+            }
+
+            FQDN=$(hostname -f)
+
+            cat "${NIFI_HOME}/conf/nifi.temp" > "${NIFI_HOME}/conf/nifi.properties"
+
+            if [[ $(grep $(hostname) conf/authorizers.temp) ]]; then
+              cat "${NIFI_HOME}/conf/authorizers.temp" > "${NIFI_HOME}/conf/authorizers.xml"
+            else
+              cat "${NIFI_HOME}/conf/authorizers.empty" > "${NIFI_HOME}/conf/authorizers.xml"
+            fi
+
+            prop_replace nifi.remote.input.host ${FQDN}
+            prop_replace nifi.cluster.node.address ${FQDN}
+            prop_replace nifi.zookeeper.connect.string ${NIFI_ZOOKEEPER_CONNECT_STRING}
+
+            exec bin/nifi.sh run
+          env:
+          - name: NIFI_ZOOKEEPER_CONNECT_STRING
+            value: nifi-zookeeper:2181
+          image: apache/nifi:1.9.2
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - bash
+                - -c
+                - |
+                  $NIFI_HOME/bin/nifi.sh stop
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 90
+            periodSeconds: 60
+            successThreshold: 1
+            tcpSocket:
+              port: 8080
+            timeoutSeconds: 1
+          name: server
+          ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 6007
+            name: cluster
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - bash
+              - -c
+              - |
+                curl -kv \
+                  http://$(hostname -f):8080/nifi-api/controller/cluster > $NIFI_BASE_DIR/data/cluster.state
+                STATUS=$(jq -r ".cluster.nodes[] | select((.address==\"$(hostname -f)\") or .address==\"localhost\") | .status" $NIFI_BASE_DIR/data/cluster.state)
+
+                if [[ ! $STATUS = "CONNECTED" ]]; then
+                  echo "Node not found with CONNECTED state. Full cluster state:"
+                  jq . $NIFI_BASE_DIR/data/cluster.state
+                  exit 1
+                fi
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/nifi/data
+            name: data
+          - mountPath: /opt/nifi/flowfile_repository
+            name: flowfile-repository
+          - mountPath: /opt/nifi/content_repository
+            name: content-repository
+          - mountPath: /opt/nifi/provenance_repository
+            name: provenance-repository
+          - mountPath: /opt/nifi/nifi-current/logs
+            name: logs
+          - mountPath: /opt/nifi/nifi-current/conf/bootstrap.conf
+            name: bootstrap-conf
+            subPath: bootstrap.conf
+          - mountPath: /opt/nifi/nifi-current/conf/nifi.temp
+            name: nifi-properties
+            subPath: nifi.temp
+          - mountPath: /opt/nifi/nifi-current/conf/authorizers.temp
+            name: authorizers-temp
+            subPath: authorizers.temp
+          - mountPath: /opt/nifi/nifi-current/conf/authorizers.empty
+            name: authorizers-empty
+            subPath: authorizers.empty
+          - mountPath: /opt/nifi/nifi-current/conf/bootstrap-notification-services.xml
+            name: bootstrap-notification-services-xml
+            subPath: bootstrap-notification-services.xml
+          - mountPath: /opt/nifi/nifi-current/conf/logback.xml
+            name: logback-xml
+            subPath: logback.xml
+          - mountPath: /opt/nifi/nifi-current/conf/login-identity-providers.xml
+            name: login-identity-providers-xml
+            subPath: login-identity-providers.xml
+          - mountPath: /opt/nifi/nifi-current/conf/state-management.xml
+            name: state-management-xml
+            subPath: state-management.xml
+          - mountPath: /opt/nifi/nifi-current/conf/zookeeper.properties
+            name: zookeeper-properties
+            subPath: zookeeper.properties
+        - args:
+          - tail
+          - -n+1
+          - -F
+          - /var/log/nifi-app.log
+          image: ez123/alpine-tini
+          imagePullPolicy: Always
+          name: app-log
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/log
+            name: logs
+        - args:
+          - tail
+          - -n+1
+          - -F
+          - /var/log/nifi-bootstrap.log
+          image: ez123/alpine-tini
+          imagePullPolicy: Always
+          name: bootstrap-log
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/log
+            name: logs
+        - args:
+          - tail
+          - -n+1
+          - -F
+          - /var/log/nifi-user.log
+          image: ez123/alpine-tini
+          imagePullPolicy: Always
+          name: user-log
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/log
+            name: logs
+        dnsPolicy: ClusterFirst
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - |
+            echo trying to contact nifi-zookeeper 2181
+            until nc -vzw 1 nifi-zookeeper 2181; do
+              echo "waiting for zookeeper..."
+              sleep 2
+            done
+          image: busybox
+          imagePullPolicy: Always
+          name: zookeeper
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsUser: 1000
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: bootstrap.conf
+              path: bootstrap.conf
+            name: nifi-config
+          name: bootstrap-conf
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: nifi.properties
+              path: nifi.temp
+            name: nifi-config
+          name: nifi-properties
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: authorizers.xml
+              path: authorizers.temp
+            name: nifi-config
+          name: authorizers-temp
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: authorizers-empty.xml
+              path: authorizers.empty
+            name: nifi-config
+          name: authorizers-empty
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: bootstrap-notification-services.xml
+              path: bootstrap-notification-services.xml
+            name: nifi-config
+          name: bootstrap-notification-services-xml
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: logback.xml
+              path: logback.xml
+            name: nifi-config
+          name: logback-xml
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: login-identity-providers.xml
+              path: login-identity-providers.xml
+            name: nifi-config
+          name: login-identity-providers-xml
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: state-management.xml
+              path: state-management.xml
+            name: nifi-config
+          name: state-management-xml
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: zookeeper.properties
+              path: zookeeper.properties
+            name: nifi-config
+          name: zookeeper-properties
+        - emptyDir: {}
+          name: data
+        - emptyDir: {}
+          name: flowfile-repository
+        - emptyDir: {}
+          name: content-repository
+        - emptyDir: {}
+          name: provenance-repository
+        - emptyDir: {}
+          name: logs
+    updateStrategy:
+      rollingUpdate:
+        partition: 0
+      type: RollingUpdate
+  status:
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: nifi-55cb855bd9
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: nifi-55cb855bd9
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    creationTimestamp: "2019-08-24T13:15:10Z"
+    generation: 3
+    labels:
+      app: zookeeper
+      chart: zookeeper-1.3.1
+      component: server
+      heritage: Tiller
+      release: nifi
+    name: nifi-zookeeper
+    namespace: bigdata
+    resourceVersion: "1171506"
+    selfLink: /apis/apps/v1/namespaces/bigdata/statefulsets/nifi-zookeeper
+    uid: d3a563b0-d086-4d40-af68-8e6bd2efe6fd
+  spec:
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: zookeeper
+        component: server
+        release: nifi
+    serviceName: nifi-zookeeper-headless
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: zookeeper
+          component: server
+          release: nifi
+      spec:
+        containers:
+        - command:
+          - /bin/bash
+          - -xec
+          - zkGenConfig.sh && exec zkServer.sh start-foreground
+          env:
+          - name: ZK_REPLICAS
+            value: "1"
+          - name: JMXAUTH
+            value: "false"
+          - name: JMXDISABLE
+            value: "false"
+          - name: JMXPORT
+            value: "1099"
+          - name: JMXSSL
+            value: "false"
+          - name: ZK_CLIENT_PORT
+            value: "2181"
+          - name: ZK_ELECTION_PORT
+            value: "3888"
+          - name: ZK_HEAP_SIZE
+            value: 2G
+          - name: ZK_INIT_LIMIT
+            value: "5"
+          - name: ZK_LOG_LEVEL
+            value: INFO
+          - name: ZK_MAX_CLIENT_CNXNS
+            value: "60"
+          - name: ZK_MAX_SESSION_TIMEOUT
+            value: "40000"
+          - name: ZK_MIN_SESSION_TIMEOUT
+            value: "4000"
+          - name: ZK_PURGE_INTERVAL
+            value: "0"
+          - name: ZK_SERVER_PORT
+            value: "2888"
+          - name: ZK_SNAP_RETAIN_COUNT
+            value: "3"
+          - name: ZK_SYNC_LIMIT
+            value: "10"
+          - name: ZK_TICK_TIME
+            value: "2000"
+          image: gcr.io/google_samples/k8szk:v3
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+              - zkOk.sh
+            failureThreshold: 3
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: zookeeper
+          ports:
+          - containerPort: 2181
+            name: client
+            protocol: TCP
+          - containerPort: 3888
+            name: election
+            protocol: TCP
+          - containerPort: 2888
+            name: server
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - zkOk.sh
+            failureThreshold: 3
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/zookeeper
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsUser: 1000
+        terminationGracePeriodSeconds: 1800
+    updateStrategy:
+      type: OnDelete
+    volumeClaimTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: nifi-zookeeper-74cf47d66d
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: nifi-zookeeper-55d49f75cd
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
