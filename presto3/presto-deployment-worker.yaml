@@ -11,11 +11,14 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: presto
+        app: presto-worker
     spec:
       containers:
       - image: jayunit100/wlan0-presto-worker:latest
         name: presto-w
+        resources:
+          requests:
+            memory: "6G"
         ports:
         - containerPort: 8080
       hostname: presto
