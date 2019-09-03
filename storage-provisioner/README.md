@@ -23,3 +23,6 @@ kubectl patch storageclass nfs -p '{"metadata": {"annotations":{"storageclass.ku
 
 Which will make dynamic volumes needed by ZK and so on provisioned
 via NFS.
+
+
+For Minio --- see the presto3-minio work, which includes helm instructions for minio alongside presto as well.
