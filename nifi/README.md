@@ -8,6 +8,8 @@ So, install a hostpath-provisioner or nfs provisioner via helm for this particul
 helm upgrade --install hostpath-provisioner --namespace kube-system rimusz/hostpath-provisioner
 ```
 
+Alternatively, you can manually provision hostpath volumes as shown in the YAML file.
+
 Greate work by cetic getting Nifi helmified ! Other then the statefulset issue for ZK, it works
 great...
  
