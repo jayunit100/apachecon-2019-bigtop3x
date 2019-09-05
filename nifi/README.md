@@ -10,8 +10,8 @@ helm upgrade --install hostpath-provisioner --namespace kube-system rimusz/hostp
 
 Alternatively, you can manually provision hostpath volumes as shown in the YAML file.
 
-Greate work by cetic getting Nifi helmified ! Other then the statefulset issue for ZK, it works
-great...
+Greate work by cetic getting Nifi helmified ! Other then the statefulset issue for ZK which needs a
+volume, it deploys as is out of the box.
  
 ```
 helm repo add cetic https://cetic.github.io/helm-charts
