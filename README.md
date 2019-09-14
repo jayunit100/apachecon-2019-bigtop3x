@@ -1,5 +1,20 @@
 This is the content for the talk given by jay vyas and sid mani @ apachecon 2019 in Las Vegas,  you can watch it here  https://www.youtube.com/watch?v=LUCE63q !
 
+# TLDR, heres how you create an analytics distro on K8s...
+
+```
+helm install stable/nfs-server-provisioner ; kubectl patch storageclass nfs -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+Minio:  kubectl -n minio create secret generic my-minio-secret --from-literal=accesskey=minio --from-literal=secretkey=minio123
+helm install --set existingSecret=my-minio-secret stable/minio --namespace=minio --name=minio
+Nifi: helm repo add cetic https://cetic.github.io/helm-charts ; helm install nifi --namespace=minio
+Kafka:  helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator $ helm install --name my-kafka incubator/kafka , kubectl edit statefulset kafka 
+ envFrom:
+        - configMapRef:
+            name: kafka-cm
+Spark: kubectl create configmap spark-conf --from-file=core-site.xml --from-file=log4j.properties --from-file=spark-defaults.conf --from-file=spark-env.sh -n bigdata ; helm install microsoft/spark --version 1.0.0 --namespace=minio
+Presto: cd ./presto3-minio/ , kubectl create -f - -n minio
+
+```
 
 # Problem
 
