@@ -1,4 +1,4 @@
-This is the content for the talk given by jay vyas and sid mani @ apachecon 2019 in Las Vegas,  you can watch it here  https://www.youtube.com/watch?v=LUCE63q !
+This is the content for the talk given by jay vyas and sid mani @ apachecon 2019 in Las Vegas,  you can watch it here  https://www.youtube.com/watch?v=LUCE63qPMyM&t=1647s !
 
 # TLDR, heres how you create an analytics distro on K8s...
 
